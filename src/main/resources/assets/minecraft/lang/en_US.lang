@@ -1,0 +1,89 @@
+# Config
+## durability
+config.name.extraGui.DisplayDurability=Display Durability
+config.name.extraGui.DurabilityPercentageDisplay=Durability Percentage Display
+config.name.extraGui.DurabilitySize=Durability Size
+config.name.extraGui.DurabilityX=Durability X
+config.name.extraGui.DurabilityY=Durability Y
+config.name.extraGui.DurabilityColor=Durability Color
+## effect
+config.name.extraGui.DisplayEffect=Display Effect
+config.name.extraGui.DisplayEffectBackGround=Display Effect BackGround
+config.name.extraGui.EffectX=Effect X
+config.name.extraGui.EffectY=Effect Y
+config.name.extraGui.EffectSize=EffectS ize
+config.name.extraGui.EffectColor=Effect Color
+
+## infos
+config.name.extraGui.fps=FPS
+config.name.extraGui.position=Position
+config.name.extraGui.chunkPosition=Chunk Position
+config.name.extraGui.direction=Direction
+config.name.extraGui.light=Light
+config.name.extraGui.biome=Biome
+config.name.extraGui.weather=Weather
+config.name.extraGui.time=Time
+
+config.name.extraGui.cancelDevInfo=Cancel Dev Info
+config.name.extraGui.showInfo=Show Info
+config.name.extraGui.xLevel=X Level For render
+config.name.extraGui.yLevel=Y Level For render
+config.name.extraGui.InfoSize=Info Size
+config.name.extraGui.infoColor=Info Color
+
+## hotkeys
+config.name.extraGui.toggleShowInfo=Toggle Show Info
+
+## config tab
+config.tab.extraGui.durability=Durability
+config.tab.extraGui.effect=Effect
+config.tab.extraGui.info=Info
+config.tab.extraGui.presentInfo=Present Info
+config.tab.extraGui.hotkeys=Hotkeys
+
+## my mod custom
+extraGui.formatter.time=Day %s (%d:%d)
+extraGui.formatter.direction.east=East
+extraGui.formatter.direction.south=South
+extraGui.formatter.direction.west=West
+extraGui.formatter.direction.north=North
+extraGui.formatter.direction.unknown=Unknown
+extraGui.formatter.weather.rain=Rain
+extraGui.formatter.weather.snow=Snow
+extraGui.formatter.weather.duration=%dDay%dHour
+extraGui.formatter.weather.storm=Storm %s - %s
+extraGui.formatter.weather.light=Light
+extraGui.formatter.weather.moderate=Moderate
+extraGui.formatter.weather.heavy=Heavy
+extraGui.formatter.weather.willRain=Will Rain
+extraGui.formatter.weather.overcast=Overcast
+extraGui.formatter.weather.clear=Clear
+extraGui.formatter.weather.cloudy=Cloudy
+extraGui.formatter.weather.clearToOvercast=Clear To Overcast
+
+## biome
+biome.ocean.name=Ocean
+biome.plains.name=Plains
+biome.desert.name=Desert
+biome.extremeHills.name=Extreme Hills
+biome.forest.name=Forest
+biome.taiga.name=Taiga
+biome.swampland.name=Swampland
+biome.river.name=River
+biome.hell.name=Hell
+biome.underworld.name=Underworld
+biome.sky.name=End
+biome.frozenOcean.name=Frozen Ocean
+biome.frozenRiver.name=Frozen River
+biome.icePlains.name=Ice Plains
+biome.iceMountains.name=Ice Mountains
+biome.beach.name=Beach
+biome.desertHills.name=Desert Hills
+biome.forestHills.name=Forest Hills
+biome.taigaHills.name=Taiga Hills
+biome.extremeHillsEdge.name=Extreme Hills Edge
+biome.jungle.name=Jungle
+biome.jungleHills.name=Jungle Hills
+biome.desertRiver.name=Desert River
+biome.jungleRiver.name=Jungle River
+biome.swampRiver.name=Swamp River

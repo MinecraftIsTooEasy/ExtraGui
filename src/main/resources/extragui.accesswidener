@@ -1,0 +1,7 @@
+accessWidener v2 named
+
+accessible method net/minecraft/InventoryEffectRenderer displayDebuffEffects ()V
+accessible field net/minecraft/Minecraft renderEngine Lnet/minecraft/TextureManager;
+accessible method net/minecraft/EnumInsulinResistanceLevel getRedAsFloat ()F
+accessible method net/minecraft/EnumInsulinResistanceLevel getGreenAsFloat ()F
+accessible method net/minecraft/EnumInsulinResistanceLevel getBlueAsFloat ()F

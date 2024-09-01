@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "moddedmite.xylose.extragui.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "target": "DEFAULT",
+  "minVersion": "0.8.3",
+  "mixins": [
+    "GuiIngameMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

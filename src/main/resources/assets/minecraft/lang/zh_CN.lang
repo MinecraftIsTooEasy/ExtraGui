@@ -1,0 +1,89 @@
+# Config
+## durability
+config.name.extraGui.DisplayDurability=显示耐久
+config.name.extraGui.DurabilityPercentageDisplay=以百分比显示
+config.name.extraGui.DurabilityX=X
+config.name.extraGui.DurabilityY=Y
+config.name.extraGui.DurabilitySize=尺寸
+config.name.extraGui.DurabilityColor=颜色
+## effect
+config.name.extraGui.DisplayEffect=显示状态效果
+config.name.extraGui.DisplayEffectBackGround=显示背景
+config.name.extraGui.EffectX=X
+config.name.extraGui.EffectY=Y
+config.name.extraGui.EffectSize=尺寸
+config.name.extraGui.EffectColor=颜色
+
+## infos
+config.name.extraGui.fps=帧数
+config.name.extraGui.position=位置
+config.name.extraGui.chunkPosition=区块位置
+config.name.extraGui.direction=朝向
+config.name.extraGui.light=光照
+config.name.extraGui.biome=生物群系
+config.name.extraGui.weather=天气
+config.name.extraGui.time=时间
+
+config.name.extraGui.cancelDevInfo=取消Dev信息
+config.name.extraGui.showInfo=显示信息
+config.name.extraGui.xLevel=X
+config.name.extraGui.yLevel=Y
+config.name.extraGui.InfoSize=尺寸
+config.name.extraGui.infoColor=颜色
+
+## hotkeys
+config.name.extraGui.toggleShowInfo=切换展示信息
+
+## config tab
+config.tab.extraGui.durability=耐久
+config.tab.extraGui.effect=状态效果
+config.tab.extraGui.info=信息
+config.tab.extraGui.presentInfo=展示信息
+config.tab.extraGui.hotkeys=快捷键
+
+## my mod custom
+extraGui.formatter.time=(第%s天) %d:%d
+extraGui.formatter.direction.east=东
+extraGui.formatter.direction.south=南
+extraGui.formatter.direction.west=西
+extraGui.formatter.direction.north=北
+extraGui.formatter.direction.unknown=未知
+extraGui.formatter.weather.rain=雨
+extraGui.formatter.weather.snow=雪
+extraGui.formatter.weather.duration=%d天%d时
+extraGui.formatter.weather.storm=雷暴 %s - %s
+extraGui.formatter.weather.light=小
+extraGui.formatter.weather.moderate=中
+extraGui.formatter.weather.heavy=大
+extraGui.formatter.weather.willRain=有雨
+extraGui.formatter.weather.overcast=阴天
+extraGui.formatter.weather.clear=晴天
+extraGui.formatter.weather.cloudy=多云
+extraGui.formatter.weather.clearToOvercast=晴转多云
+
+## biome
+biome.ocean.name=海洋
+biome.plains.name=平原
+biome.desert.name=沙漠
+biome.extremeHills.name=山地
+biome.forest.name=森林
+biome.taiga.name=针叶林
+biome.swampland.name=沼泽
+biome.river.name=河流
+biome.hell.name=下界
+biome.underworld.name=深岩
+biome.sky.name=末地
+biome.frozenOcean.name=冻洋
+biome.frozenRiver.name=冻河
+biome.icePlains.name=雪原
+biome.iceMountains.name=雪山
+biome.beach.name=沙滩
+biome.desertHills.name=沙漠丘陵
+biome.forestHills.name=森林丘陵
+biome.taigaHills.name=针叶林丘陵
+biome.extremeHillsEdge.name=山地边缘
+biome.jungle.name=丛林
+biome.jungleHills.name=丛林丘陵
+biome.desertRiver.name=沙漠河流
+biome.jungleRiver.name=丛林河流
+biome.swampRiver.name=沼泽河流
