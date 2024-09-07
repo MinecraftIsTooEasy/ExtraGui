@@ -2,6 +2,7 @@
 ## durability
 config.name.extraGui.DisplayDurability=Display Durability
 config.name.extraGui.DurabilityPercentageDisplay=Durability Percentage Display
+config.name.extraGui.DurabilityLine=Durability Line
 config.name.extraGui.DurabilitySize=Durability Size
 config.name.extraGui.DurabilityX=Durability X
 config.name.extraGui.DurabilityY=Durability Y
@@ -9,6 +10,7 @@ config.name.extraGui.DurabilityColor=Durability Color
 ## effect
 config.name.extraGui.DisplayEffect=Display Effect
 config.name.extraGui.DisplayEffectBackGround=Display Effect BackGround
+config.name.extraGui.MiniEffect=Mini Effect
 config.name.extraGui.EffectX=Effect X
 config.name.extraGui.EffectY=Effect Y
 config.name.extraGui.EffectSize=EffectS ize
@@ -26,6 +28,7 @@ config.name.extraGui.time=Time
 
 config.name.extraGui.cancelDevInfo=Cancel Dev Info
 config.name.extraGui.showInfo=Show Info
+config.name.extraGui.RightAlign=Right Align
 config.name.extraGui.xLevel=X Level For render
 config.name.extraGui.yLevel=Y Level For render
 config.name.extraGui.InfoSize=Info Size
@@ -33,6 +36,7 @@ config.name.extraGui.infoColor=Info Color
 
 ## hotkeys
 config.name.extraGui.toggleShowInfo=Toggle Show Info
+config.name.extraGui.Stats=Player Stats
 
 ## config tab
 config.tab.extraGui.durability=Durability

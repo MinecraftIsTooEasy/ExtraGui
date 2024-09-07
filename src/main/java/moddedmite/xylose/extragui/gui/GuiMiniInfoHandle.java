@@ -21,8 +21,8 @@ public class GuiMiniInfoHandle {
         return INSTANCE;
     }
 
-    public int getLightInfo(Minecraft mc) {
-        return mc.thePlayer.getWorld().getBlockLightValue(this.x, this.y, this.z);
+    public String getLightInfo(Minecraft mc) {
+        return mc.thePlayer.getWorld().getBlockLightValue(this.x, this.y, this.z) + "/" + (15 - mc.thePlayer.getWorld().skylightSubtracted);
     }
 
     public void drawStrings(Gui gui, FontRenderer fontRenderer, List<String> strings) {
@@ -31,10 +31,15 @@ public class GuiMiniInfoHandle {
         Dimension displaySize = DisplayUtil.displaySize();
         int x = ((int) (displaySize.width / ExtraGuiConfig.InfoSize.getDoubleValue()) - 1) * pos.x / 100;
         int y = ((int) (displaySize.height / ExtraGuiConfig.InfoSize.getDoubleValue()) - 1) * pos.y / 100;
+        Minecraft mc = Minecraft.getMinecraft();
+        ScaledResolution sr = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
         for (int i = 0; i < size; ++i) {
             GL11.glPushMatrix();
             GL11.glScalef((float) ExtraGuiConfig.InfoSize.getDoubleValue(), (float) ExtraGuiConfig.InfoSize.getDoubleValue(), 1.0f);
-            gui.drawString(fontRenderer, strings.get(i), 2 + x, 2 + 10 * (y / 10 + i), ExtraGuiConfig.infoColor.getColorInteger());
+            if (ExtraGuiConfig.RightAlign.getBooleanValue())
+                gui.drawString(fontRenderer, strings.get(i), sr.getScaledWidth() - fontRenderer.getStringWidth(strings.get(i)) - 2 - x, 2 + 10 * (y / 10 + i), ExtraGuiConfig.infoColor.getColorInteger());
+            else
+                gui.drawString(fontRenderer, strings.get(i), 2 + x, 2 + 10 * (y / 10 + i), ExtraGuiConfig.infoColor.getColorInteger());
             GL11.glPopMatrix();
         }
     }

@@ -38,7 +38,10 @@ public class GuiIngameMixin extends Gui {
             GuiEffectRenderer inventoryEffectRenderer = new GuiEffectRenderer();
 
             guiDurability.renderDurability();
-            inventoryEffectRenderer.displayDebuffEffects();
+            if (ExtraGuiConfig.MiniEffect.getBooleanValue())
+                inventoryEffectRenderer.displayMiniDebuffEffects();
+            else
+                inventoryEffectRenderer.displayDebuffEffects();
             guiDebugInfo.renderDebugInfoOverlay(mc);
         }
     }

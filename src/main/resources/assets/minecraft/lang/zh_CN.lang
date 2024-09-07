@@ -2,13 +2,16 @@
 ## durability
 config.name.extraGui.DisplayDurability=显示耐久
 config.name.extraGui.DurabilityPercentageDisplay=以百分比显示
+config.name.extraGui.DurabilityLine=显示耐久条
 config.name.extraGui.DurabilityX=X
 config.name.extraGui.DurabilityY=Y
 config.name.extraGui.DurabilitySize=尺寸
 config.name.extraGui.DurabilityColor=颜色
+
 ## effect
 config.name.extraGui.DisplayEffect=显示状态效果
 config.name.extraGui.DisplayEffectBackGround=显示背景
+config.name.extraGui.MiniEffect=小型状态显示
 config.name.extraGui.EffectX=X
 config.name.extraGui.EffectY=Y
 config.name.extraGui.EffectSize=尺寸
@@ -26,6 +29,7 @@ config.name.extraGui.time=时间
 
 config.name.extraGui.cancelDevInfo=取消Dev信息
 config.name.extraGui.showInfo=显示信息
+config.name.extraGui.RightAlign=以屏幕右侧对齐
 config.name.extraGui.xLevel=X
 config.name.extraGui.yLevel=Y
 config.name.extraGui.InfoSize=尺寸
@@ -33,6 +37,7 @@ config.name.extraGui.infoColor=颜色
 
 ## hotkeys
 config.name.extraGui.toggleShowInfo=切换展示信息
+config.name.extraGui.Stats=显示玩家属性
 
 ## config tab
 config.tab.extraGui.durability=耐久

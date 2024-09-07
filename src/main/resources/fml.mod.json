@@ -3,22 +3,36 @@
   "id": "extragui",
   "version": "${version}",
   "depends": {
-    "fishmodloader": ">=3.0.0",
-    "many-lib": ">=2.0.0"
+    "fishmodloader": ">=3.2.4",
+    "many-lib": ">=2.1.0",
+    "rusted_iron_core_rust_removal": ">=0.1.0"
   },
   "environment": "client",
   "name": "Extra Gui",
-  "description": "",
+  "description": "添加实用Gui",
   "authors": [
-    "Xy_Lose"
+    "Xy_Lose",
+    "Debris"
   ],
   "entrypoints": {
     "main": [
       "moddedmite.xylose.extragui.ExtraGui"
+    ],
+    "modmenu": [
+      "moddedmite.xylose.extragui.ExtraGuiModMenu"
     ]
   },
   "mixins": [
     "extragui.mixins.json"
   ],
-  "accessWidener": "extragui.accesswidener"
+  "accessWidener": "extragui.accesswidener",
+  "icon": "extragui_icon.png",
+  "License": "MIT",
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/EntityClientPlayerMP": [
+        "mod/rustedironcore/api/player/ClientPlayerAPI"
+      ]
+    }
+  }
 }

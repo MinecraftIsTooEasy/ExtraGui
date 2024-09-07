@@ -21,7 +21,7 @@ repositories {
 loom {
 	accessWidenerPath = file("src/main/resources/extragui.accesswidener")
 	mergedMinecraftJar()
-	setFML(new File("F:\\Projects\\IDEA\\Minecraft\\MITE\\FML3\\FishModLoader-v3.3.2.jar"))
+	setFML(new File("libs\\FishModLoader-v3.3.2.jar"))
 	mods {
 		"Hwite" {
 			sourceSet sourceSets.main
@@ -42,9 +42,9 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 //	implementation("org.spongepowered:mixin:0.8.5")
 
-	implementation files("libs\\fastutil-8.5.12.jar")
-//	implementation files("libs\\EMI-1.0.4.jar")
+	implementation files("libs\\RustedIronCore-RustRemoval-0.1.0.jar")
 	implementation files("libs\\ManyLib-2.1.0.jar")
+	implementation files("libs\\ModMenu-1.0.0.jar")
 	implementation files(loom.getFML().toPath())
 }
 
