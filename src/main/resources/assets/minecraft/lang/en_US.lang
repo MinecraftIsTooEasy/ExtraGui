@@ -7,6 +7,7 @@ config.name.extraGui.DurabilitySize=Durability Size
 config.name.extraGui.DurabilityX=Durability X
 config.name.extraGui.DurabilityY=Durability Y
 config.name.extraGui.DurabilityColor=Durability Color
+
 ## effect
 config.name.extraGui.DisplayEffect=Display Effect
 config.name.extraGui.DisplayEffectBackGround=Display Effect BackGround
@@ -32,7 +33,13 @@ config.name.extraGui.RightAlign=Right Align
 config.name.extraGui.xLevel=X Level For render
 config.name.extraGui.yLevel=Y Level For render
 config.name.extraGui.InfoSize=Info Size
-config.name.extraGui.infoColor=Info Color
+config.name.extraGui.infoColor=Info Color、
+
+## inventory item render
+config.name.extraGui.DisplayItemRender=Display Item Render
+config.name.extraGui.ItemRenderX=Item Render X
+config.name.extraGui.ItemRenderY=Item Render Y
+config.name.extraGui.ItemRenderSize=Item Render Size
 
 ## hotkeys
 config.name.extraGui.toggleShowInfo=Toggle Show Info
@@ -43,6 +50,7 @@ config.tab.extraGui.durability=Durability
 config.tab.extraGui.effect=Effect
 config.tab.extraGui.info=Info
 config.tab.extraGui.presentInfo=Present Info
+config.tab.extraGui.itemRender=Item Render
 config.tab.extraGui.hotkeys=Hotkeys
 
 ## my mod custom

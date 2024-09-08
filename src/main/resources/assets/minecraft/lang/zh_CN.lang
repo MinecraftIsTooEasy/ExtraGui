@@ -35,6 +35,12 @@ config.name.extraGui.yLevel=Y
 config.name.extraGui.InfoSize=尺寸
 config.name.extraGui.infoColor=颜色
 
+## inventory item render
+config.name.extraGui.DisplayItemRender=显示背包内物品渲染
+config.name.extraGui.ItemRenderX=X
+config.name.extraGui.ItemRenderY=Y
+config.name.extraGui.ItemRenderSize=尺寸
+
 ## hotkeys
 config.name.extraGui.toggleShowInfo=切换展示信息
 config.name.extraGui.Stats=显示玩家属性
@@ -44,6 +50,7 @@ config.tab.extraGui.durability=耐久
 config.tab.extraGui.effect=状态效果
 config.tab.extraGui.info=信息
 config.tab.extraGui.presentInfo=展示信息
+config.tab.extraGui.itemRender=背包内物品渲染
 config.tab.extraGui.hotkeys=快捷键
 
 ## my mod custom

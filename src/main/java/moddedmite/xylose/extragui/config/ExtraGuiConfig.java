@@ -51,6 +51,11 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final ConfigInfo Weather = new ConfigInfo("extraGui.weather", true, mc -> GuiMiniInfoHandle.getInstance().weatherInfo(mc.theWorld, Biome.getString((Minecraft)mc)));
     public static final ConfigInfo DayTime = new ConfigInfo("extraGui.time", true, mc -> GuiMiniInfoHandle.getInstance().getTime(mc.thePlayer.getWorld()));
 
+    public static final ConfigBoolean DisplayItemRender = new ConfigBoolean("extraGui.DisplayItemRender", true);
+    public static final ConfigInteger ItemRenderX = new ConfigInteger("extraGui.ItemRenderX", 5, 0, 100);
+    public static final ConfigInteger ItemRenderY = new ConfigInteger("extraGui.ItemRenderY", 25, 0, 100);
+    public static final ConfigDouble ItemRenderSize = new ConfigDouble("extraGui.ItemRenderSize", 8.0F, 1.0F, 8.0F);
+
     public static final ConfigHotkey ToggleInfo = new ConfigHotkey("extraGui.toggleShowInfo", Keyboard.KEY_H);
     public static final ConfigHotkey Stats = new ConfigHotkey("extraGui.Stats", Keyboard.KEY_P);
 
@@ -60,6 +65,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final List<ConfigBase<?>> effect;
     public static final List<ConfigBase<?>> presentInfo;
     public static final List<ConfigBase<?>> info;
+    public static final List<ConfigBase<?>> itemRender;
     public static final List<ConfigHotkey> hotkeys;
 
     public static final List<ConfigTab> tabs = new ArrayList<>();
@@ -73,6 +79,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
         effect = List.of(DisplayEffect, DisplayEffectBackGround, MiniEffect, EffectX, EffectY, EffectSize, EffectColor);
         info = List.of(ShowInfo, DisableDevInfo, RightAlign, InfoXLevel, InfoYLevel, InfoSize, infoColor);
         presentInfo = List.of(FPS, Position, ChunkPosition, Direction, Light, Biome, Weather, DayTime);
+        itemRender = List.of(DisplayItemRender, ItemRenderX, ItemRenderY, ItemRenderSize);
         hotkeys = List.of(ToggleInfo, Stats);
 
         configValues = new ArrayList<>();
@@ -80,13 +87,14 @@ public class ExtraGuiConfig extends SimpleConfigs {
         configValues.addAll(effect);
         configValues.addAll(info);
         configValues.addAll(presentInfo);
+        configValues.addAll(itemRender);
 
         tabs.add(new ConfigTab("extraGui.durability", durability));
         tabs.add(new ConfigTab("extraGui.effect", effect));
         tabs.add(new ConfigTab("extraGui.info", info));
         tabs.add(new ConfigTab("extraGui.presentInfo", presentInfo));
+        tabs.add(new ConfigTab("extraGui.itemRender", itemRender));
         tabs.add(new ConfigTab("extraGui.hotkeys", hotkeys));
-
 
         Instance = new ExtraGuiConfig();
 
@@ -110,6 +118,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
         ConfigUtils.writeConfigBase(root, "状态效果", effect);
         ConfigUtils.writeConfigBase(root, "信息", info);
         ConfigUtils.writeConfigBase(root, "显示信息", presentInfo);
+        ConfigUtils.writeConfigBase(root, "物品渲染", itemRender);
         ConfigUtils.writeConfigBase(root, "快捷键", hotkeys);
         JsonUtils.writeJsonToFile(root, this.optionsFile);
     }
@@ -126,6 +135,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
                 ConfigUtils.readConfigBase(root, "状态效果", effect);
                 ConfigUtils.readConfigBase(root, "信息", info);
                 ConfigUtils.readConfigBase(root, "显示信息", presentInfo);
+                ConfigUtils.readConfigBase(root, "物品渲染", itemRender);
                 ConfigUtils.readConfigBase(root, "快捷键", hotkeys);
             }
         }
