@@ -7,9 +7,11 @@ import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.SimpleConfigs;
 import fi.dy.masa.malilib.config.options.*;
 import fi.dy.masa.malilib.util.JsonUtils;
+import fi.dy.masa.malilib.util.KeyCodes;
 import moddedmite.xylose.extragui.gui.GuiMiniInfoHandle;
 import moddedmite.xylose.extragui.gui.GuiEntityStats;
 import moddedmite.xylose.extragui.util.BiomeNameI18n;
+import net.minecraft.GuiScreen;
 import net.minecraft.Minecraft;
 import org.lwjgl.input.Keyboard;
 
@@ -19,10 +21,10 @@ import java.util.List;
 
 public class ExtraGuiConfig extends SimpleConfigs {
     public static final ConfigBoolean DisplayDurability = new ConfigBoolean("extraGui.DisplayDurability", true);
-    public static final ConfigBoolean DurabilityPercentageDisplay = new ConfigBoolean("extraGui.DurabilityPercentageDisplay", false);
+    public static final ConfigBoolean DurabilityPercentageDisplay = new ConfigBoolean("extraGui.DurabilityPercentageDisplay", true);
     public static final ConfigBoolean DurabilityLine = new ConfigBoolean("extraGui.DurabilityLine", false);
-    public static final ConfigInteger DurabilityX = new ConfigInteger("extraGui.DurabilityX", 85, 0, 95);
-    public static final ConfigInteger DurabilityY = new ConfigInteger("extraGui.DurabilityY", 65, 0, 70);
+    public static final ConfigInteger DurabilityX = new ConfigInteger("extraGui.DurabilityX", 90, 0, 95);
+    public static final ConfigInteger DurabilityY = new ConfigInteger("extraGui.DurabilityY", 100, 0, 100);
     public static final ConfigDouble DurabilitySize = new ConfigDouble("extraGui.DurabilitySize", 1.0F, 0.1F, 2.0F);
     public static final ConfigColor DurabilityColor = new ConfigColor("extraGui.DurabilityColor", "#FFFFFFFF");
 
@@ -58,6 +60,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
 
     public static final ConfigHotkey ToggleInfo = new ConfigHotkey("extraGui.toggleShowInfo", Keyboard.KEY_H);
     public static final ConfigHotkey Stats = new ConfigHotkey("extraGui.Stats", Keyboard.KEY_P);
+    public static final ConfigHotkey MobStats = new ConfigHotkey("extraGui.MobStats", KeyCodes.getStorageString(29, 25));
 
     private static final ExtraGuiConfig Instance;
     public static final List<ConfigBase<?>> configValues;
@@ -80,7 +83,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
         info = List.of(ShowInfo, DisableDevInfo, RightAlign, InfoXLevel, InfoYLevel, InfoSize, infoColor);
         presentInfo = List.of(FPS, Position, ChunkPosition, Direction, Light, Biome, Weather, DayTime);
         itemRender = List.of(DisplayItemRender, ItemRenderX, ItemRenderY, ItemRenderSize);
-        hotkeys = List.of(ToggleInfo, Stats);
+        hotkeys = List.of(ToggleInfo, Stats, MobStats);
 
         configValues = new ArrayList<>();
         configValues.addAll(durability);
@@ -100,6 +103,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
 
         ToggleInfo.setHotKeyPressCallBack(minecraft -> ShowInfo.toggleBooleanValue());
         Stats.setHotKeyPressCallBack(minecraft -> minecraft.displayGuiScreen(new GuiEntityStats()));
+        MobStats.setHotKeyPressCallBack(minecraft -> minecraft.displayGuiScreen(new GuiEntityStats(minecraft.objectMouseOver != null ? minecraft.objectMouseOver.getEntityHit().getAsEntityLiving() : minecraft.thePlayer)));
     }
 
     @Override

@@ -39,43 +39,36 @@ public class GuiDurability extends Gui {
         if (ExtraGuiConfig.DisplayDurability.getBooleanValue()) {
             if (player.hasHeldItem()) {
                 RenderHelper.enableGUIStandardItemLighting();
-                renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, tool, x, y);
-                enableDurabilityLine(tool, y);
+                renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, tool, x, y - 18);
                 enable2DRender();
-                RenderHelper.disableStandardItemLighting();
-                this.drawString(fontRenderer, getDurability(tool), x + 20, y + 5, ExtraGuiConfig.DurabilityColor.getColorInteger());
+                this.drawString(fontRenderer, getDurability(tool), x + 20, y - 13, ExtraGuiConfig.DurabilityColor.getColorInteger());
             }
 
             if (helmet != null) {
-                renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, helmet, x, y + 18);
-                enableDurabilityLine(helmet, y + 18);
+                renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, helmet, x, y - 78);
                 enable2DRender();
-                this.drawString(fontRenderer, getDurabilityArmor(helmet), x + 20, y + 22, ExtraGuiConfig.DurabilityColor.getColorInteger());
+                this.drawString(fontRenderer, getDurabilityArmor(helmet), x + 20, y - 73, ExtraGuiConfig.DurabilityColor.getColorInteger());
             }
 
             if (plate != null) {
-                renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, plate, x, y + 36);
-                enableDurabilityLine(plate, y + 36);
+                renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, plate, x, y - 63);
                 enable2DRender();
-                this.drawString(fontRenderer, getDurabilityArmor(plate), x + 20, y + 41, ExtraGuiConfig.DurabilityColor.getColorInteger());
+                this.drawString(fontRenderer, getDurabilityArmor(plate), x + 20, y - 58, ExtraGuiConfig.DurabilityColor.getColorInteger());
             }
 
             if (legs != null) {
-                renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, legs, x, y + 54);
-                enableDurabilityLine(legs, y + 54);
+                renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, legs, x, y - 48);
                 enable2DRender();
-                this.drawString(fontRenderer, getDurabilityArmor(legs), x + 20, y + 59, ExtraGuiConfig.DurabilityColor.getColorInteger());
+                this.drawString(fontRenderer, getDurabilityArmor(legs), x + 20, y - 43, ExtraGuiConfig.DurabilityColor.getColorInteger());
             }
 
             if (boots != null) {
-                renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, boots, x, y + 72);
-                enableDurabilityLine(boots, y + 72);
+                renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, boots, x, y - 33);
                 enable2DRender();
-                this.drawString(fontRenderer, getDurabilityArmor(boots), x + 20, y + 77, ExtraGuiConfig.DurabilityColor.getColorInteger());
+                this.drawString(fontRenderer, getDurabilityArmor(boots), x + 20, y - 28, ExtraGuiConfig.DurabilityColor.getColorInteger());
             }
         }
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+
         GL11.glPopMatrix();
     }
 
@@ -93,15 +86,17 @@ public class GuiDurability extends Gui {
     public String getDurability(ItemStack itemStack) {
         DecimalFormat decimalFormat = new DecimalFormat("0");
         if (!ExtraGuiConfig.DurabilityPercentageDisplay.getBooleanValue()) {
-            if (itemStack.isTool() && itemStack.getRemainingDurability() != 0)
+            if (itemStack.isTool() && itemStack.getRemainingDurability() > 0) {
                 return itemStack.getRemainingDurability() + "/" + itemStack.getMaxDamage();
-            else
+            } else {
                 return itemStack.stackSize + "/" + itemStack.getMaxStackSize();
+            }
         } else {
-            if (itemStack.getRemainingDurability() != 0)
+            if (itemStack.getRemainingDurability() > 0) {
                 return decimalFormat.format(((float) itemStack.getRemainingDurability() / (float) itemStack.getMaxDamage()) * 100) + "%";
-            else
+            } else {
                 return itemStack.stackSize + "/" + itemStack.getMaxStackSize();
+            }
         }
     }
 

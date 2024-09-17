@@ -44,6 +44,7 @@ config.name.extraGui.ItemRenderSize=Item Render Size
 ## hotkeys
 config.name.extraGui.toggleShowInfo=Toggle Show Info
 config.name.extraGui.Stats=Player Stats
+config.name.extraGui.MobStats=MobS tats
 
 ## config tab
 config.tab.extraGui.durability=Durability

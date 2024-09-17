@@ -44,6 +44,7 @@ config.name.extraGui.ItemRenderSize=尺寸
 ## hotkeys
 config.name.extraGui.toggleShowInfo=切换展示信息
 config.name.extraGui.Stats=显示玩家属性
+config.name.extraGui.MobStats=显示所指生物属性
 
 ## config tab
 config.tab.extraGui.durability=耐久

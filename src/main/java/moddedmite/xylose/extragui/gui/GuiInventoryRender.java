@@ -22,11 +22,11 @@ public class GuiInventoryRender {
             GL11.glScalef((float) ExtraGuiConfig.ItemRenderSize.getDoubleValue(), (float) ExtraGuiConfig.ItemRenderSize.getDoubleValue(), 1.0F);
 //            RenderHelper.enableStandardItemLighting();
             renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, slot.getStack(), x, y);
-//            GL11.glDisable(GL11.GL_LIGHTING);
-            RenderHelper.disableStandardItemLighting();
+            GL11.glDisable(GL11.GL_LIGHTING);
+            //            RenderHelper.disableStandardItemLighting();
         }
-//        GL11.glEnable(GL11.GL_DEPTH_TEST);
-//        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
     }
 }

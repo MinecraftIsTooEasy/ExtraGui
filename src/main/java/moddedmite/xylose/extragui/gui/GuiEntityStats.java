@@ -14,10 +14,20 @@ public class GuiEntityStats extends GuiScreen {
     private int page = 1;
     private int x;
     private int y;
+    private EntityLivingBase entityLivingBase;
+
+    public GuiEntityStats() {
+    }
+
+    public GuiEntityStats(EntityLivingBase entityLivingBase) {
+        this.entityLivingBase = entityLivingBase;
+    }
 
     public void initGui() {
         this.buttonList.clear();
-        this.buttonList.add(new GuiButton(1, this.width / 2 + 2, this.height / 2 + 58, 114, 20, I18n.getString("gui.nextPage")));
+        this.buttonList.add(new GuiButton(1, this.width / 2 + 2, this.height / 2 + 90, 114, 20, I18n.getString("gui.nextPage")));
+        Minecraft mc = Minecraft.getMinecraft();
+        EntityClientPlayerMP player = mc.thePlayer;
     }
 
     protected void actionPerformed(GuiButton par1GuiButton) {
@@ -40,66 +50,80 @@ public class GuiEntityStats extends GuiScreen {
     public void drawScreen(int par1, int par2, float par3) {
         Minecraft mc = Minecraft.getMinecraft();
         EntityClientPlayerMP player = mc.thePlayer;
+        if (this.entityLivingBase == null)
+            entityLivingBase = player;
         StringBuilder sb = new StringBuilder();
         this.drawDefaultBackground();
         x = (this.width - 248) / 2 + 10;
         y = (this.height - 166) / 2 + 8;
-        if (page == 1) {
-            this.fontRenderer.drawString(player.getEntityName(), x, y, 2039583);
-            y += 12;
-            int riding_entity = Math.round(player.getLevelModifier(EnumLevelBonus.HARVESTING) * 100.0F);
-            int level_modifier_crafting = Math.round(player.getLevelModifier(EnumLevelBonus.CRAFTING) * 100.0F);
-            int level_modifier_melee = Math.round(player.getLevelModifier(EnumLevelBonus.MELEE_DAMAGE) * 100.0F);
-            this.fontRenderer.drawString("Level: " + player.getExperienceLevel() + " (" + (riding_entity < 0 ? "" : "+") + riding_entity + "% harvesting, " + ((level_modifier_crafting < 0 ? "" : "+") + level_modifier_crafting + "% crafting, " + ((level_modifier_melee < 0 ? "" : "+") + level_modifier_melee + "% melee)")), x, y, 2039583);
-            y += 12;
-            this.fontRenderer.drawString(("XP: " + player.experience), x, y, 2039583);
-            y += 12;
-            this.fontRenderer.drawString(("Health: " + StringHelper.formatFloat(player.getHealth(), 1, 1) + "/" + player.getMaxHealth()), x, y, 2039583);
-            y += 12;
-            this.fontRenderer.drawString(("Satiation: " + player.getSatiation() + "/" + player.getSatiationLimit()), x, y, 2039583);
-            y += 12;
-            this.fontRenderer.drawString(("Nutrition: " + player.getNutrition() + "/" + player.getNutritionLimit()), x, y, 2039583);
-            y += 12;
-            int protein;
-            int phytonutrients;
-            int essential_fats;
-            int insulin_response;
-            protein = player.getProtein();
-            phytonutrients = player.getProtein();
-            essential_fats = player.getEssentialFats();
-            insulin_response = player.getInsulinResistance();
-            this.fontRenderer.drawString(("Protein: " + protein + " (" + 100 * protein / 160000 + "%)"), x, y, 2039583);
-            y += 12;
-            this.fontRenderer.drawString(("Essential Fats: " + essential_fats + " (" + 100 * essential_fats / 160000 + "%)"), x, y, 2039583);
-            y += 12;
-            this.fontRenderer.drawString(("Phytonutrients: " + phytonutrients + " (" + 100 * phytonutrients / 160000 + "%)"), x, y, 2039583);
-            y += 12;
-            this.fontRenderer.drawString("Insulin Response: " + insulin_response, x, y, 2039583);
-            y += 12;
-            this.fontRenderer.drawString(" (Mild: " + 100 * insulin_response / 48000 + "%, Moderate: " + 100 * insulin_response / 96000 + "%, Severe: " + 100 * insulin_response / 144000 + "%, Max: " + 100 * insulin_response / 192000 + "%)", x, y, 2039583);
-            y += 12;
-            this.fontRenderer.drawString((getMeleeDamageString(player)), x, y, 2039583);
-        } else if (page == 2) {
-            this.fontRenderer.drawString(("Protection"), x, y, 2039583);
-            y += 12;
-            this.fontRenderer.drawString((" vs Generic: " + customFloatFormat(player.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null)))), x, y, 2039583);
-            y += 12;
-            this.fontRenderer.drawString((" vs Falls: " + customFloatFormat(player.getTotalProtection(DamageSource.fall))), x, y, 2039583);
-            y += 12;
-            this.fontRenderer.drawString((" vs Fire: " + customFloatFormat(player.getTotalProtection(DamageSource.onFire))), x, y, 2039583);
-            y += 12;
-            EntityArrow entity_arrow = new EntityArrow(player.worldObj);
-            entity_arrow.item_arrow = Item.arrowFlint;
-            this.fontRenderer.drawString((" vs Projectiles: " + customFloatFormat(player.getTotalProtection(DamageSource.causeArrowDamage(entity_arrow, (Entity) null)))), x, y, 2039583);
-            y += 12;
-            appendSectionResistance(player, sb);
-        } else if (page == 3) {
-            appendSectionPotionEffects(player, sb);
-            appendSectionEquipment(player, sb);
-            appendSectionInventory(player, sb);
-        }
-        super.drawScreen(par1, par2, par3);
+        if (entityLivingBase != null) {
+            if (page == 1) {
+                if (entityLivingBase == player)
+                    this.fontRenderer.drawString(player.getEntityName(), x, y, 2039583);
+                else
+                    this.fontRenderer.drawString(entityLivingBase.getEntityName(), x, y, 2039583);
+                y += 12;
+                if (entityLivingBase == player) {
+                    int riding_entity = Math.round(player.getLevelModifier(EnumLevelBonus.HARVESTING) * 100.0F);
+                    int level_modifier_crafting = Math.round(player.getLevelModifier(EnumLevelBonus.CRAFTING) * 100.0F);
+                    int level_modifier_melee = Math.round(player.getLevelModifier(EnumLevelBonus.MELEE_DAMAGE) * 100.0F);
+                    this.fontRenderer.drawString("Level: " + player.getExperienceLevel(), x, y, 2039583);
+                    y += 12;
+                    this.fontRenderer.drawString("(" + (riding_entity < 0 ? "" : "+") + riding_entity + "% harvesting, " + ((level_modifier_crafting < 0 ? "" : "+") + level_modifier_crafting + "% crafting, " + ((level_modifier_melee < 0 ? "" : "+") + level_modifier_melee + "% melee)")), x, y, 2039583);
+                    y += 12;
+                    this.fontRenderer.drawString(("XP: " + player.experience), x, y, 2039583);
+                    y += 12;
+                    this.fontRenderer.drawString(("Health: " + StringHelper.formatFloat(player.getHealth(), 1, 1) + "/" + player.getMaxHealth()), x, y, 2039583);
+                    y += 12;
+                    this.fontRenderer.drawString(("Satiation: " + player.getSatiation() + "/" + player.getSatiationLimit()), x, y, 2039583);
+                    y += 12;
+                    this.fontRenderer.drawString(("Nutrition: " + player.getNutrition() + "/" + player.getNutritionLimit()), x, y, 2039583);
+                    y += 12;
+                    int protein;
+                    int phytonutrients;
+                    int essential_fats;
+                    int insulin_response;
+                    protein = player.getProtein();
+                    phytonutrients = player.getProtein();
+                    essential_fats = player.getEssentialFats();
+                    insulin_response = player.getInsulinResistance();
+                    this.fontRenderer.drawString(("Protein: " + protein + " (" + 100 * protein / 160000 + "%)"), x, y, 2039583);
+                    y += 12;
+                    this.fontRenderer.drawString(("Essential Fats: " + essential_fats + " (" + 100 * essential_fats / 160000 + "%)"), x, y, 2039583);
+                    y += 12;
+                    this.fontRenderer.drawString(("Phytonutrients: " + phytonutrients + " (" + 100 * phytonutrients / 160000 + "%)"), x, y, 2039583);
+                    y += 12;
+                    this.fontRenderer.drawString("Insulin Response: " + insulin_response, x, y, 2039583);
+                    y += 12;
+                    this.fontRenderer.drawString("(Mild: " + 100 * insulin_response / 48000 + "%, Moderate: " + 100 * insulin_response / 96000 + "%, Severe: " + 100 * insulin_response / 144000 + "%, Max: " + 100 * insulin_response / 192000 + "%)", x, y, 2039583);
+                    y += 12;
+                }
+                if (entityLivingBase == player)
+                    this.fontRenderer.drawString((getMeleeDamageString(player)), x, y, 2039583);
+                else
+                    this.fontRenderer.drawString((getMeleeDamageString(entityLivingBase)), x, y, 2039583);
+            } else if (page == 2) {
+                this.fontRenderer.drawString(("Protection"), x, y, 2039583);
+                y += 12;
+                this.fontRenderer.drawString((" vs Generic: " + customFloatFormat(entityLivingBase.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null)))), x, y, 2039583);
+                y += 12;
+                this.fontRenderer.drawString((" vs Falls: " + customFloatFormat(entityLivingBase.getTotalProtection(DamageSource.fall))), x, y, 2039583);
+                y += 12;
+                this.fontRenderer.drawString((" vs Fire: " + customFloatFormat(entityLivingBase.getTotalProtection(DamageSource.onFire))), x, y, 2039583);
+                y += 12;
+                EntityArrow entity_arrow = new EntityArrow(entityLivingBase.worldObj);
+                entity_arrow.item_arrow = Item.arrowFlint;
+                this.fontRenderer.drawString((" vs Projectiles: " + customFloatFormat(entityLivingBase.getTotalProtection(DamageSource.causeArrowDamage(entity_arrow, (Entity) null)))), x, y, 2039583);
+                y += 12;
+                appendSectionResistance(entityLivingBase, sb);
+            } else if (page == 3) {
+                appendSectionPotionEffects(entityLivingBase, sb);
+                appendSectionEquipment(entityLivingBase, sb);
+                appendSectionInventory(entityLivingBase, sb);
+            }
+            super.drawScreen(par1, par2, par3);
 
+        }
     }
 
     private static String getMeleeDamageString(EntityLivingBase entity_living_base) {
