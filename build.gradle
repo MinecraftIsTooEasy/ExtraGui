@@ -42,7 +42,7 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 //	implementation("org.spongepowered:mixin:0.8.5")
 
-	implementation files("libs\\RustedIronCore-RustRemoval-0.1.0.jar")
+	implementation files("libs\\RustedIronCore-1.3.0.jar")
 	implementation files("libs\\ManyLib-2.1.0.jar")
 	implementation files("libs\\ModMenu-1.0.0.jar")
 	implementation files(loom.getFML().toPath())

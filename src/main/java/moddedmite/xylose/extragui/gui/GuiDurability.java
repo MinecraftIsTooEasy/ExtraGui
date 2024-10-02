@@ -92,7 +92,7 @@ public class GuiDurability extends Gui {
                 return itemStack.stackSize + "/" + itemStack.getMaxStackSize();
             }
         } else {
-            if (itemStack.getRemainingDurability() > 0) {
+            if (itemStack.isTool() && itemStack.getRemainingDurability() > 0) {
                 return decimalFormat.format(((float) itemStack.getRemainingDurability() / (float) itemStack.getMaxDamage()) * 100) + "%";
             } else {
                 return itemStack.stackSize + "/" + itemStack.getMaxStackSize();

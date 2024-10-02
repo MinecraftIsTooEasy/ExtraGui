@@ -1,5 +1,6 @@
 package moddedmite.xylose.extragui.gui;
 
+import moddedmite.rustedironcore.api.player.ClientPlayerAPI;
 import net.minecraft.*;
 import org.lwjgl.opengl.GL11;
 
