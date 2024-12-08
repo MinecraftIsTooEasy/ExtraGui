@@ -1,5 +1,6 @@
 package moddedmite.xylose.extragui.gui;
 
+import moddedmite.rustedironcore.api.interfaces.IPotion;
 import moddedmite.xylose.extragui.config.ExtraGuiConfig;
 import moddedmite.xylose.extragui.util.DisplayUtil;
 import net.minecraft.*;
@@ -137,6 +138,10 @@ public class GuiEffectRenderer extends Gui {
                         int var10 = var15.getStatusIconIndex();
                         this.drawTexturedModalRect(x + 6, y + 7, 0 + var10 % 8 * 18, 198 + var10 / 8 * 18, 18, 18);
                     }
+                    if (((IPotion) var15).ric$UsesIndividualTexture()) {
+                        this.mc.getTextureManager().bindTexture(((IPotion) var15).ric$GetTexture());
+                        this.drawTexturedModalRect2(x + 6, y + 7, 18, 18);
+                    }
 
 //                    String var16 = I18n.getString(var15.getName());
 //
@@ -258,6 +263,11 @@ public class GuiEffectRenderer extends Gui {
                     if (var15.hasStatusIcon()) {
                         int var10 = var15.getStatusIconIndex();
                         this.drawTexturedModalRect(x + 6, y + 7, 0 + var10 % 8 * 18, 198 + var10 / 8 * 18, 18, 18);
+                    }
+
+                    if (((IPotion) var15).ric$UsesIndividualTexture()) {
+                        this.mc.getTextureManager().bindTexture(((IPotion) var15).ric$GetTexture());
+                        this.drawTexturedModalRect2(x + 6, y + 7, 18, 18);
                     }
 
                     String var16 = I18n.getString(var15.getName());

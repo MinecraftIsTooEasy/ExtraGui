@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import java.awt.*;
+import java.nio.FloatBuffer;
 
 public class GuiInventoryRender {
     public void renderStack(Slot slot, Minecraft mc, RenderItem renderItem) {
@@ -20,12 +21,11 @@ public class GuiInventoryRender {
         GL11.glPushMatrix();
         if (slot != null && ExtraGuiConfig.DisplayItemRender.getBooleanValue()) {
             GL11.glScalef((float) ExtraGuiConfig.ItemRenderSize.getDoubleValue(), (float) ExtraGuiConfig.ItemRenderSize.getDoubleValue(), 1.0F);
-            GL11.glDisable(32826);
-//            RenderHelper.disableStandardItemLighting();
-            GL11.glDisable(2896);
-            GL11.glDisable(2929);
-//            RenderHelper.enableGUIStandardItemLighting();
+//          RenderHelper.disableStandardItemLighting();
+            GL11.glDisable(GL11.GL_LIGHTING);
+            RenderHelper.enableStandardItemLighting();
             renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, slot.getStack(), x, y);
+
         }
 //        GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();

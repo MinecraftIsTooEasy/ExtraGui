@@ -62,14 +62,16 @@ public class GuiIngameMixin extends Gui {
             return;
         }
         GuiMiniInfoHandle.getInstance().updatePosition(this.mc);
-        FontRenderer fontRenderer = this.mc.fontRenderer;
         ArrayList<String> strings = new ArrayList<String>();
         for (ConfigBase<?> value : ExtraGuiConfig.configValues) {
             ConfigInfo configInfo;
             if (!(value instanceof ConfigInfo) || !(configInfo = (ConfigInfo)value).getBooleanValue()) continue;
-            strings.add(value.getConfigGuiDisplayName() + ": " + configInfo.getString(this.mc));
+            if (configInfo.isShowName())
+                strings.add(value.getConfigGuiDisplayName() + ": " + configInfo.getString(this.mc));
+            else
+                strings.add(configInfo.getString(this.mc));
         }
-        GuiMiniInfoHandle.getInstance().drawStrings( this, fontRenderer, strings);
+        GuiMiniInfoHandle.getInstance().renderDebugInfo(strings);
     }
 
     @Redirect(method={"renderGameOverlay"}, at=@At(value="INVOKE", target="Lnet/minecraft/Minecraft;inDevMode()Z"), require=0)

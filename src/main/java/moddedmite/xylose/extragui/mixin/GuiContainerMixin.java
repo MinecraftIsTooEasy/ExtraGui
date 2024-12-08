@@ -19,9 +19,7 @@ public class GuiContainerMixin extends GuiScreen {
     @Inject(
             method = "drawScreen",
             at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/GuiContainer;drawGuiContainerBackgroundLayer(FII)V",
-                    shift = At.Shift.AFTER
+                    value = "TAIL"
             ))
     private void renderStack(int par1, int par2, float par3, CallbackInfo ci) {
         GuiInventoryRender guiInventoryRender = new GuiInventoryRender();

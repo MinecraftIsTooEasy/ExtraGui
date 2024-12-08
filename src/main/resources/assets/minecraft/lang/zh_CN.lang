@@ -19,17 +19,27 @@ config.name.extraGui.EffectColor=颜色
 
 ## infos
 config.name.extraGui.fps=帧数
+config.name.extraGui.mem=内存
+config.name.extraGui.realTime=现实时间
+config.name.extraGui.time=时间
 config.name.extraGui.position=位置
+config.name.extraGui.dimensionPosition=维度位置
+config.comment.extraGui.dimensionPosition=当位于非下界时,显示对应下界位置,当处于下界时,显示对应主世界位置
 config.name.extraGui.chunkPosition=区块位置
 config.name.extraGui.direction=朝向
+config.name.extraGui.yawPitchSpeed=方向角与俯仰角
+config.name.extraGui.weather=天气
 config.name.extraGui.light=光照
 config.name.extraGui.biome=生物群系
-config.name.extraGui.weather=天气
-config.name.extraGui.time=时间
+config.name.extraGui.dimension=维度
+config.name.extraGui.moonPhases=月相
 
 config.name.extraGui.cancelDevInfo=取消Dev信息
 config.name.extraGui.showInfo=显示信息
 config.name.extraGui.RightAlign=以屏幕右侧对齐
+config.name.extraGui.background=背景
+config.name.extraGui.timeZone=时区
+config.comment.extraGui.timeZone=默认系统时区,可用GMT或Time Zone格式,不可用UTC格式
 config.name.extraGui.xLevel=X
 config.name.extraGui.yLevel=Y
 config.name.extraGui.InfoSize=尺寸
@@ -54,13 +64,19 @@ config.tab.extraGui.presentInfo=展示信息
 config.tab.extraGui.itemRender=背包内物品渲染
 config.tab.extraGui.hotkeys=快捷键
 
-## my mod custom
-extraGui.formatter.time=(第%s天) %d:%d
-extraGui.formatter.direction.east=东
-extraGui.formatter.direction.south=南
-extraGui.formatter.direction.west=西
-extraGui.formatter.direction.north=北
+## mini info items
+extraGui.formatter.mem.allocated=已分配:
+extraGui.formatter.nether=下界:
+extraGui.formatter.overworld=主世界:
+extraGui.formatter.time=(第%s天) %d:%d:xx
+extraGui.formatter.direction.east=东(X轴正方向)
+extraGui.formatter.direction.south=南(Z轴正方向)
+extraGui.formatter.direction.west=西(X轴负方向)
+extraGui.formatter.direction.north=北(Z轴负方向)
 extraGui.formatter.direction.unknown=未知
+extraGui.formatter.yaw=方向角: %.2f
+extraGui.formatter.pitch=俯仰角: %.2f
+extraGui.formatter.speed=速度: %.2f
 extraGui.formatter.weather.rain=雨
 extraGui.formatter.weather.snow=雪
 extraGui.formatter.weather.duration=%d天%d时
@@ -68,13 +84,26 @@ extraGui.formatter.weather.storm=雷暴 %s - %s
 extraGui.formatter.weather.light=小
 extraGui.formatter.weather.moderate=中
 extraGui.formatter.weather.heavy=大
-extraGui.formatter.weather.willRain=有雨
+extraGui.formatter.weather.willRain=即将下雨
 extraGui.formatter.weather.overcast=阴天
 extraGui.formatter.weather.clear=晴天
 extraGui.formatter.weather.cloudy=多云
 extraGui.formatter.weather.clearToOvercast=晴转多云
+extraGui.formatter.moon_phases.harvest_moon=§e丰收之月§f
+extraGui.formatter.moon_phases.blood_moon=§c血月§f
+extraGui.formatter.moon_phases.moon_dog=§7幻月§f
+extraGui.formatter.moon_phases.blue_moon=§9蓝月§f
+extraGui.formatter.moon_phases.full_moon=满月
+extraGui.formatter.moon_phases.waning_gibbous_moon=下凸月
+extraGui.formatter.moon_phases.last_quarter_moon=下弦月
+extraGui.formatter.moon_phases.waning_crescent_moon=残月
+extraGui.formatter.moon_phases.new_moon=新月
+extraGui.formatter.moon_phases.waxing_gibbous_moon=娥眉月
+extraGui.formatter.moon_phases.first_quarter_moon=上弦月
+extraGui.formatter.moon_phases.waxing_crescent_moon=上凸月
+extraGui.formatter.moon_phases.unknown=未知
 
-## biome
+## biomes
 biome.ocean.name=海洋
 biome.plains.name=平原
 biome.desert.name=沙漠

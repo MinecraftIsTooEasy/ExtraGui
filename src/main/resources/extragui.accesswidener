@@ -6,3 +6,5 @@ accessible method net/minecraft/EnumInsulinResistanceLevel getRedAsFloat ()F
 accessible method net/minecraft/EnumInsulinResistanceLevel getGreenAsFloat ()F
 accessible method net/minecraft/EnumInsulinResistanceLevel getBlueAsFloat ()F
 accessible field net/minecraft/NetClientHandler mc Lnet/minecraft/Minecraft;
+accessible field net/minecraft/Minecraft timer Lnet/minecraft/Timer;
+accessible field net/minecraft/Timer ticksPerSecond F

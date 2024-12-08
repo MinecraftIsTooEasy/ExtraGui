@@ -84,9 +84,9 @@ public class GuiEntityStats extends GuiScreen {
                     int phytonutrients;
                     int essential_fats;
                     int insulin_response;
-                    protein = player.getProtein();
-                    phytonutrients = player.getProtein();
-                    essential_fats = player.getEssentialFats();
+                    protein = ClientPlayerAPI.getProtein(player);
+                    phytonutrients = ClientPlayerAPI.getProtein(player);
+                    essential_fats = ClientPlayerAPI.getEssentialFats(player);
                     insulin_response = player.getInsulinResistance();
                     this.fontRenderer.drawString(("Protein: " + protein + " (" + 100 * protein / 160000 + "%)"), x, y, 2039583);
                     y += 12;
@@ -335,5 +335,10 @@ public class GuiEntityStats extends GuiScreen {
 
     private static String customFloatFormat(float f) {
         return f < 1.0F && (double) f != 0.0D ? StringHelper.formatFloat(f, 2, 2) : StringHelper.formatFloat(f, 1, 1);
+    }
+
+    @Override
+    public boolean doesGuiPauseGame() {
+        return false;
     }
 }

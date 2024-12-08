@@ -19,21 +19,31 @@ config.name.extraGui.EffectColor=Effect Color
 
 ## infos
 config.name.extraGui.fps=FPS
+config.name.extraGui.mem=Mem
+config.name.extraGui.realTime=Real Time
+config.name.extraGui.time=Time
 config.name.extraGui.position=Position
+config.name.extraGui.dimensionPosition=Dimension Position
+config.comment.extraGui.dimensionPosition=When in a non-Nether, the corresponding Nether location is displayed, and when in the Nether, the corresponding Overworld location is displayed
 config.name.extraGui.chunkPosition=Chunk Position
 config.name.extraGui.direction=Direction
+config.name.extraGui.yawPitchSpeed=Yaw & Pitch
 config.name.extraGui.light=Light
 config.name.extraGui.biome=Biome
 config.name.extraGui.weather=Weather
-config.name.extraGui.time=Time
+config.name.extraGui.moonPhases=Moon Phases
+config.name.extraGui.dimension=Dimension
 
 config.name.extraGui.cancelDevInfo=Cancel Dev Info
 config.name.extraGui.showInfo=Show Info
 config.name.extraGui.RightAlign=Right Align
+config.name.extraGui.background=Background
+config.name.extraGui.timeZone=Time Zone
+config.comment.extraGui.timeZone=The default system time zone, can be in GMT or Time Zone format, but not in UTC format
 config.name.extraGui.xLevel=X Level For render
 config.name.extraGui.yLevel=Y Level For render
 config.name.extraGui.InfoSize=Info Size
-config.name.extraGui.infoColor=Info Color、
+config.name.extraGui.infoColor=Info Color
 
 ## inventory item render
 config.name.extraGui.DisplayItemRender=Display Item Render
@@ -54,13 +64,19 @@ config.tab.extraGui.presentInfo=Present Info
 config.tab.extraGui.itemRender=Item Render
 config.tab.extraGui.hotkeys=Hotkeys
 
-## my mod custom
-extraGui.formatter.time=Day %s (%d:%d)
-extraGui.formatter.direction.east=East
-extraGui.formatter.direction.south=South
-extraGui.formatter.direction.west=West
-extraGui.formatter.direction.north=North
+## mini info items
+extraGui.formatter.mem.allocated=Allocated:
+extraGui.formatter.nether=Nether:
+extraGui.formatter.overworld=Overworld:
+extraGui.formatter.time=(Day %s) %d:%d:xx
+extraGui.formatter.direction.east=East(Positive X)
+extraGui.formatter.direction.south=South(Positive Z)
+extraGui.formatter.direction.west=West(Negative X)
+extraGui.formatter.direction.north=North(Negative Z)
 extraGui.formatter.direction.unknown=Unknown
+extraGui.formatter.yaw=Yaw: %.2f
+extraGui.formatter.pitch=Pitch: %.2f
+extraGui.formatter.speed=Speed: %.2f
 extraGui.formatter.weather.rain=Rain
 extraGui.formatter.weather.snow=Snow
 extraGui.formatter.weather.duration=%dDay%dHour
@@ -73,6 +89,19 @@ extraGui.formatter.weather.overcast=Overcast
 extraGui.formatter.weather.clear=Clear
 extraGui.formatter.weather.cloudy=Cloudy
 extraGui.formatter.weather.clearToOvercast=Clear To Overcast
+extraGui.formatter.moon_phases.harvest_moon=§Harvest Moon§f
+extraGui.formatter.moon_phases.blood_moon=§Blood Moon§f
+extraGui.formatter.moon_phases.moon_dog=§Moon Dog§f
+extraGui.formatter.moon_phases.blue_moon=§Blue Moon§f
+extraGui.formatter.moon_phases.full_moon=Full Moon
+extraGui.formatter.moon_phases.waning_gibbous_moon=Waning Gibbous Moon
+extraGui.formatter.moon_phases.last_quarter_moon=Last Quarter Moon
+extraGui.formatter.moon_phases.waning_crescent_moon=Waning Crescent Moon
+extraGui.formatter.moon_phases.new_moon=Mew Moon
+extraGui.formatter.moon_phases.waxing_gibbous_moon=Waxing Gibbous Moon
+extraGui.formatter.moon_phases.first_quarter_moon=First Quarter Moon
+extraGui.formatter.moon_phases.waxing_crescent_moon=Waxing Crescent Moon
+extraGui.formatter.moon_phases.unknown=Unknown
 
 ## biome
 biome.ocean.name=Ocean
