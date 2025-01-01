@@ -16,11 +16,7 @@ public class GuiContainerMixin extends GuiScreen {
     @Shadow
     protected static RenderItem itemRenderer = new RenderItem();
 
-    @Inject(
-            method = "drawScreen",
-            at = @At(
-                    value = "TAIL"
-            ))
+    @Inject(method = "drawScreen", at = @At(value = "TAIL"))
     private void renderStack(int par1, int par2, float par3, CallbackInfo ci) {
         GuiInventoryRender guiInventoryRender = new GuiInventoryRender();
         guiInventoryRender.renderStack(theSlot, this.mc, itemRenderer);

@@ -4,10 +4,8 @@ import moddedmite.xylose.extragui.config.ExtraGuiConfig;
 import moddedmite.xylose.extragui.util.DisplayUtil;
 import net.minecraft.*;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import java.awt.*;
-import java.nio.FloatBuffer;
 
 public class GuiInventoryRender {
     public void renderStack(Slot slot, Minecraft mc, RenderItem renderItem) {

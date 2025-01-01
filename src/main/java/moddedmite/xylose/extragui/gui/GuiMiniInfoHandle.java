@@ -56,7 +56,7 @@ public class GuiMiniInfoHandle {
             if (!Strings.isNullOrEmpty(s)) {
                 int fontHeight = fontRenderer.FONT_HEIGHT;
                 int stringWidth = fontRenderer.getStringWidth(s);
-                int yBase = (1 + fontHeight * (y / 10 + i)) ;
+                int yBase = (1 + fontHeight * (y / 10 + i));
                 int backgroundX = 2 + (1 + x);
                 int backgroundX_1 = 2 + (2 + x + stringWidth + 1);
                 int stringX = 2 + (2 + x);
@@ -103,7 +103,7 @@ public class GuiMiniInfoHandle {
     public String getPosition(World world) {
         String dimensionPos = "";
         if (ExtraGuiConfig.DimensionPosition.getBooleanValue())
-            dimensionPos =  !Objects.equals(world.getDimensionName(), "Nether") ? " / " +  I18n.getString("extraGui.formatter.nether") + " x: " + this.nx + " y: " + this.fy + " z: " + this.nz : " / " + I18n.getString("extraGui.formatter.overworld") + " x: " + this.ox + " y: " + this.fy + " z: " + this.oz;
+            dimensionPos = !Objects.equals(world.getDimensionName(), "Nether") ? " / " + I18n.getString("extraGui.formatter.nether") + " x: " + this.nx + " y: " + this.fy + " z: " + this.nz : " / " + I18n.getString("extraGui.formatter.overworld") + " x: " + this.ox + " y: " + this.fy + " z: " + this.oz;
         return "x: " + this.fx + " y: " + this.fy + " z: " + this.fz + dimensionPos;
     }
 
@@ -113,10 +113,10 @@ public class GuiMiniInfoHandle {
 
     public void updatePosition(Minecraft mc) {
         this.x = MathHelper.floor_double(mc.thePlayer.posX);
-        this.y = MathHelper.floor_double((mc.thePlayer.posY - (double)mc.thePlayer.yOffset));
+        this.y = MathHelper.floor_double((mc.thePlayer.posY - (double) mc.thePlayer.yOffset));
         this.z = MathHelper.floor_double(mc.thePlayer.posZ);
         this.fx = Float.parseFloat(String.format("%.1f", mc.thePlayer.posX));
-        this.fy = Float.parseFloat(String.format("%.1f", (mc.thePlayer.posY - (double)mc.thePlayer.yOffset)));
+        this.fy = Float.parseFloat(String.format("%.1f", (mc.thePlayer.posY - (double) mc.thePlayer.yOffset)));
         this.fz = Float.parseFloat(String.format("%.1f", mc.thePlayer.posZ));
         this.cx = x / 16;
         this.cz = z / 16;
@@ -162,54 +162,71 @@ public class GuiMiniInfoHandle {
         boolean snowZone = world.isBiomeFreezing(this.x, this.z);
         String rainSnow = snowZone ? I18n.getString("extraGui.formatter.weather.snow") : I18n.getString("extraGui.formatter.weather.rain");
         WeatherEvent event = world.getCurrentWeatherEvent();
-        Random rand = new Random(world.getDayOfWorld());
         if (event != null) {
             boolean modular;
-            long startDay = event.start / 24000L;
-            long startHour = event.start % 24000L / 1000L;
-            long endDay = event.end / 24000L;
-            long endHour = event.end % 24000L / 1000L;
-            if (startHour + 6 >= 24) {
-                startDay += 1;
-                startHour = (startHour + 6) % 24;
-            } else {
-                startHour += 6;
-            }
-            if (endHour + 6 >= 24) {
-                endDay += 1;
-                endHour = (endHour + 6) % 24;
-            } else {
-                endHour += 6;
-            }
-            String START = I18n.getStringParams("extraGui.formatter.weather.duration", startDay + 1L, startHour);
-            String END = I18n.getStringParams("extraGui.formatter.weather.duration", endDay + 1L, endHour);
-            boolean bl = modular = world.getDayOfWorld() % 32 == 0;
+            modular = event.hasStorm();
             if (modular) {
-                weatherInfo = I18n.getStringParams("extraGui.formatter.weather.storm", START, END);
+                weatherInfo = I18n.getStringParams("extraGui.formatter.weather.storm", this.getStormStartDH(event), this.getStormEndDH(event), this.getRainStartDH(event), this.getRainEndDH(event));
             } else {
-//                int i = rand.nextInt(3);
-//                String level = switch (i) {
-//                    case 0 -> I18n.getString("extraGui.formatter.weather.light");
-//                    case 1 -> I18n.getString("extraGui.formatter.weather.moderate");
-//                    default -> I18n.getString("extraGui.formatter.weather.heavy");
-//                };
-                weatherInfo = rainSnow + " " + START + " - " + END;
+                weatherInfo = rainSnow + " " + this.getRainStartDH(event) + " - " + this.getRainEndDH(event);
+            }
+        } else if (world.getNextWeatherEvent(false) != null) {
+            weatherInfo = I18n.getStringParams("extraGui.formatter.weather.willRain", this.getRainStartDH(world.getNextWeatherEvent(false)), this.getRainEndDH(world.getNextWeatherEvent(false)));
+            if (world.getNextWeatherEvent(true) != null) {
+                weatherInfo += " (" + I18n.getStringParams("extraGui.formatter.weather.willStorm", this.getStormStartDH(world.getNextWeatherEvent(true)), this.getStormEndDH(world.getNextWeatherEvent(true))) + ")";
             }
         } else {
-            event = world.getNextWeatherEvent(false);
-            if (event != null) {
-                weatherInfo = event.start - (long) world.getAdjustedTimeOfDay() < 6000L ? I18n.getString("extraGui.formatter.weather.willRain") : I18n.getString("extraGui.formatter.weather.overcast");
-            } else {
-//                int i = rand.nextInt(3);
-//                weatherInfo = switch (i) {
-//                    case 0 -> I18n.getString("extraGui.formatter.weather.clear");
-//                    case 1 -> I18n.getString("extraGui.formatter.weather.cloudy");
-//                    default -> I18n.getString("extraGui.formatter.weather.clearToOvercast");
-//                };
-                return I18n.getString("extraGui.formatter.weather.clear");
-            }
+            return I18n.getString("extraGui.formatter.weather.clear");
         }
         return weatherInfo;
+    }
+
+    private String getRainStartDH(WeatherEvent event) {
+        long rainStartDay = event.start / 24000L;
+        long rainStartHour = event.start % 24000L / 1000L;
+        if (rainStartHour + 6 >= 24) {
+            rainStartDay += 1;
+            rainStartHour = (rainStartHour + 6) % 24;
+        } else {
+            rainStartHour += 6;
+        }
+        return I18n.getStringParams("extraGui.formatter.weather.duration", rainStartDay + 1L, rainStartHour);
+    }
+
+    private String getRainEndDH(WeatherEvent event) {
+        long rainEndDay = event.end / 24000L;
+        long rainEndHour = event.end % 24000L / 1000L;
+        if (rainEndHour + 6 >= 24) {
+            rainEndDay += 1;
+            rainEndHour = (rainEndHour + 6) % 24;
+        } else {
+            rainEndHour += 6;
+        }
+        return I18n.getStringParams("extraGui.formatter.weather.duration", rainEndDay + 1L, rainEndHour);
+    }
+
+    private String getStormStartDH(WeatherEvent event) {
+        long stormStartDay = event.start_of_storm / 24000L;
+        long stormStartHour = event.start_of_storm % 24000L / 1000L;
+        if (stormStartHour + 6 >= 24) {
+            stormStartDay += 1;
+            stormStartHour = (stormStartHour + 6) % 24;
+        } else {
+            stormStartHour += 6;
+        }
+        return I18n.getStringParams("extraGui.formatter.weather.duration", stormStartDay + 1L, stormStartHour);
+    }
+
+    private String getStormEndDH(WeatherEvent event) {
+        long stormEndDay = event.end_of_storm / 24000L;
+        long stormEndHour = event.end_of_storm % 24000L / 1000L;
+        if (stormEndHour + 6 >= 24) {
+            stormEndDay += 1;
+            stormEndHour = (stormEndHour + 6) % 24;
+        } else {
+            stormEndHour += 6;
+        }
+        return I18n.getStringParams("extraGui.formatter.weather.duration", stormEndDay + 1L, stormEndHour);
     }
 
     public String getMoonPhases(World world) {

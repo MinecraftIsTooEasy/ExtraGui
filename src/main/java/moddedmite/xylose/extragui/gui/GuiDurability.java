@@ -4,7 +4,6 @@ import moddedmite.xylose.extragui.config.ExtraGuiConfig;
 import moddedmite.xylose.extragui.util.DisplayUtil;
 import net.minecraft.*;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
 
 import java.awt.*;
 import java.text.DecimalFormat;

@@ -3,10 +3,7 @@ package moddedmite.xylose.extragui.mixin;
 import fi.dy.masa.malilib.config.options.ConfigBase;
 import moddedmite.xylose.extragui.config.ConfigInfo;
 import moddedmite.xylose.extragui.config.ExtraGuiConfig;
-import moddedmite.xylose.extragui.gui.GuiDebugInfo;
-import moddedmite.xylose.extragui.gui.GuiDurability;
-import moddedmite.xylose.extragui.gui.GuiEffectRenderer;
-import moddedmite.xylose.extragui.gui.GuiMiniInfoHandle;
+import moddedmite.xylose.extragui.gui.*;
 import net.minecraft.*;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
@@ -36,6 +33,7 @@ public class GuiIngameMixin extends Gui {
             GuiDurability guiDurability = new GuiDurability();
             GuiDebugInfo guiDebugInfo = new GuiDebugInfo();
             GuiEffectRenderer inventoryEffectRenderer = new GuiEffectRenderer();
+//            GuiWorldTitle guiWorldTitle = new GuiWorldTitle();
 
             guiDurability.renderDurability();
             if (ExtraGuiConfig.MiniEffect.getBooleanValue())
@@ -43,6 +41,7 @@ public class GuiIngameMixin extends Gui {
             else
                 inventoryEffectRenderer.displayDebuffEffects();
             guiDebugInfo.renderDebugInfoOverlay(mc);
+//            guiWorldTitle.renderWorldTitle(mc);
         }
     }
 

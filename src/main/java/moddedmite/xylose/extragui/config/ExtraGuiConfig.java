@@ -66,6 +66,16 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final ConfigInteger ItemRenderY = new ConfigInteger("extraGui.ItemRenderY", 25, 0, 100);
     public static final ConfigDouble ItemRenderSize = new ConfigDouble("extraGui.ItemRenderSize", 8.0F, 1.0F, 8.0F);
 
+//    public static final ConfigBoolean DisplayWorldTitle = new ConfigBoolean("extraGui.DisplayWorldTitle", true);
+//    public static final ConfigInteger WorldTitleX = new ConfigInteger("extraGui.WorldTitleX", 50, 0, 100);
+//    public static final ConfigInteger WorldTitleY = new ConfigInteger("extraGui.WorldTitleY", 20, 0, 100);
+//    public static final ConfigDouble WorldTitleSize = new ConfigDouble("extraGui.WorldTitleSize", 4.0F, 1.0F, 8.0F);
+//    public static final ConfigInteger WorldTitleAlpha = new ConfigInteger("extraGui.WorldTitleAlpha", 255, 0, 255);
+//    public static final ConfigInteger WorldTitleDisplayTime = new ConfigInteger("extraGui.WorldTitleDisplayTime", 255, 0, 255);
+//    public static final ConfigBoolean WorldTitleFadeOut = new ConfigBoolean("extraGui.WorldTitleFadeOut", true);
+//    public static final ConfigString WorldTitleColor = new ConfigString("extraGui.WorldTitleColor", "ffffff");
+//    public static final int WorldTitleColorInt =  Integer.parseInt(WorldTitleColor.getStringValue(), 16);
+
     public static final ConfigHotkey ToggleInfo = new ConfigHotkey("extraGui.toggleShowInfo", Keyboard.KEY_H);
     public static final ConfigHotkey Stats = new ConfigHotkey("extraGui.Stats", Keyboard.KEY_P);
     public static final ConfigHotkey MobStats = new ConfigHotkey("extraGui.MobStats", KeyCodes.getStorageString(29, 25));
@@ -77,6 +87,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final List<ConfigBase<?>> presentInfo;
     public static final List<ConfigBase<?>> info;
     public static final List<ConfigBase<?>> itemRender;
+//    public static final List<ConfigBase<?>> worldTitle;
     public static final List<ConfigHotkey> hotkeys;
 
     public static final List<ConfigTab> tabs = new ArrayList<>();
@@ -91,6 +102,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
         info = List.of(ShowInfo, DisableDevInfo, RightAlign, background, timeZone, InfoXLevel, InfoYLevel, InfoSize, infoColor);
         presentInfo = List.of(FPS, Mem, RealTime, MCTime, Position, DimensionPosition, ChunkPosition, Direction, YawPitchSpeed, Weather, Light, Biome, Dimension, MoonPhases);
         itemRender = List.of(DisplayItemRender, ItemRenderX, ItemRenderY, ItemRenderSize);
+//        worldTitle = List.of(DisplayWorldTitle, WorldTitleX, WorldTitleY, WorldTitleSize, WorldTitleAlpha, WorldTitleDisplayTime, WorldTitleFadeOut, WorldTitleColor);
         hotkeys = List.of(ToggleInfo, Stats, MobStats);
 
         configValues = new ArrayList<>();
@@ -99,12 +111,14 @@ public class ExtraGuiConfig extends SimpleConfigs {
         configValues.addAll(info);
         configValues.addAll(presentInfo);
         configValues.addAll(itemRender);
+//        configValues.addAll(worldTitle);
 
         tabs.add(new ConfigTab("extraGui.durability", durability));
         tabs.add(new ConfigTab("extraGui.effect", effect));
         tabs.add(new ConfigTab("extraGui.info", info));
         tabs.add(new ConfigTab("extraGui.presentInfo", presentInfo));
         tabs.add(new ConfigTab("extraGui.itemRender", itemRender));
+//        tabs.add(new ConfigTab("extraGui.worldTitle", worldTitle));
         tabs.add(new ConfigTab("extraGui.hotkeys", hotkeys));
 
         Instance = new ExtraGuiConfig();
@@ -131,6 +145,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
         ConfigUtils.writeConfigBase(root, "信息", info);
         ConfigUtils.writeConfigBase(root, "显示信息", presentInfo);
         ConfigUtils.writeConfigBase(root, "物品渲染", itemRender);
+//        ConfigUtils.writeConfigBase(root, "世界标题", worldTitle);
         ConfigUtils.writeConfigBase(root, "快捷键", hotkeys);
         JsonUtils.writeJsonToFile(root, this.optionsFile);
     }
@@ -148,6 +163,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
                 ConfigUtils.readConfigBase(root, "信息", info);
                 ConfigUtils.readConfigBase(root, "显示信息", presentInfo);
                 ConfigUtils.readConfigBase(root, "物品渲染", itemRender);
+//                ConfigUtils.readConfigBase(root, "世界标题", worldTitle);
                 ConfigUtils.readConfigBase(root, "快捷键", hotkeys);
             }
         }
