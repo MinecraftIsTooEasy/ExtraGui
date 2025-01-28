@@ -3,7 +3,7 @@
   "id": "extragui",
   "version": "${version}",
   "depends": {
-    "fishmodloader": ">=3.2.4",
+    "fishmodloader": ">=3.4.1",
     "many-lib": ">=2.1.0",
     "rusted_iron_core": ">=1.3.5"
   },

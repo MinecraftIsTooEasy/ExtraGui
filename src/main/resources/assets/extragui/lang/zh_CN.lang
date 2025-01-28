@@ -10,18 +10,14 @@ config.name.extraGui.DurabilityColor=颜色
 
 ## effect
 config.name.extraGui.DisplayEffect=显示状态效果
-config.name.extraGui.DisplayEffectBackGround=显示背景
-config.name.extraGui.MiniEffect=小型状态显示
-config.name.extraGui.EffectX=X
-config.name.extraGui.EffectY=Y
-config.name.extraGui.EffectSize=尺寸
-config.name.extraGui.EffectColor=颜色
 
 ## infos
 config.name.extraGui.fps=帧数
 config.name.extraGui.mem=内存
 config.name.extraGui.realTime=现实时间
 config.name.extraGui.time=时间
+config.name.extraGui.overWorldTime=主世界时间
+config.comment.extraGui.overWorldTime=当处于非主世界时,显示主世界的时间
 config.name.extraGui.position=位置
 config.name.extraGui.dimensionPosition=维度位置
 config.comment.extraGui.dimensionPosition=当位于非下界时,显示对应下界位置,当处于下界时,显示对应主世界位置
@@ -33,6 +29,7 @@ config.name.extraGui.light=光照
 config.name.extraGui.biome=生物群系
 config.name.extraGui.dimension=维度
 config.name.extraGui.moonPhases=月相
+config.name.extraGui.customString=自定义标语
 
 config.name.extraGui.cancelDevInfo=取消Dev信息
 config.name.extraGui.showInfo=显示信息
@@ -55,6 +52,7 @@ config.name.extraGui.ItemRenderSize=尺寸
 config.name.extraGui.toggleShowInfo=切换展示信息
 config.name.extraGui.Stats=显示玩家属性
 config.name.extraGui.MobStats=显示所指生物属性
+config.name.extraGui.toggleDisplayEffect=切换显示状态效果
 
 ## config tab
 config.tab.extraGui.durability=耐久
@@ -69,6 +67,7 @@ extraGui.formatter.mem.allocated=已分配:
 extraGui.formatter.nether=下界:
 extraGui.formatter.overworld=主世界:
 extraGui.formatter.time=(第%s天) %d:%d:xx
+extraGui.formatter.time.overworld=主世界: (第%s天) %d:%d:xx
 extraGui.formatter.direction.east=东(X轴正方向)
 extraGui.formatter.direction.south=南(Z轴正方向)
 extraGui.formatter.direction.west=西(X轴负方向)

@@ -91,7 +91,30 @@ public class GuiMiniInfoHandle {
         if (((minute = String.valueOf(world.getTimeOfDay() % 1000 * 3 / 50))).length() == 1) {
             minute = "0" + minute;
         }
-        return I18n.getStringParams("extraGui.formatter.time", world.getDayOfWorld(), hour, minute);
+        String overworldMinute;
+        String overworldHour = String.valueOf(this.getHourOfOverworld(world));
+        if (overworldHour.length() == 1) {
+            overworldHour = "0" + overworldHour;
+        }
+        if (((overworldMinute = String.valueOf(this.getTimeOfDayOverworld(world) % 1000 * 3 / 50))).length() == 1) {
+            overworldMinute = "0" + overworldMinute;
+        }
+        String overworldTime = "";
+        if (ExtraGuiConfig.OverWorldTime.getBooleanValue() && !Objects.equals(world.getDimensionName(), "Overworld"))
+            overworldTime =  " / " + I18n.getStringParams("extraGui.formatter.time.overworld", World.getDayOfWorld(world.getWorldInfo().getWorldTotalTime(0)), overworldHour, overworldMinute);
+        return I18n.getStringParams("extraGui.formatter.time", world.getDayOfWorld(), hour, minute) + overworldTime;
+    }
+
+    public final int getTimeOfDayOverworld(World world) {
+        return world.getWorldInfo().getWorldTimeOfDay(0);
+    }
+
+    public int getAdjustedTimeOfDayOverworld(World world) {
+        return World.getAdjustedTimeOfDay(this.getTimeOfDayOverworld(world));
+    }
+
+    public int getHourOfOverworld(World world) {
+        return this.getAdjustedTimeOfDayOverworld(world) / 1000;
     }
 
     public String getRealTime() {
@@ -253,5 +276,11 @@ public class GuiMiniInfoHandle {
 
     public String getDimension(World world) {
         return world.getDimensionName() + " / ID: " + world.getDimensionId();
+    }
+
+    public String getCustomString() {
+        if (!Objects.equals(ExtraGuiConfig.CustomString.getStringValue(), ""))
+            return ExtraGuiConfig.CustomString.getStringValue();
+        return "";
     }
 }

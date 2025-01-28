@@ -7,7 +7,8 @@
   "mixins": [
     "GuiContainerMixin",
     "GuiFurnaceMixin",
-    "GuiIngameMixin"
+    "GuiIngameMixin",
+    "InventoryEffectRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

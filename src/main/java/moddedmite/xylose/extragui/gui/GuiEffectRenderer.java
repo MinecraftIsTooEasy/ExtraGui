@@ -1,292 +1,135 @@
 package moddedmite.xylose.extragui.gui;
 
 import moddedmite.rustedironcore.api.interfaces.IPotion;
-import moddedmite.xylose.extragui.config.ExtraGuiConfig;
-import moddedmite.xylose.extragui.util.DisplayUtil;
 import net.minecraft.*;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GuiEffectRenderer extends Gui {
-    private boolean field_74222_o;
-    private int initial_tick;
-    private static final ResourceLocation sugar_icon = new ResourceLocation("textures/items/sugar.png");
-    protected static final ResourceLocation inventory_texture = new ResourceLocation("textures/gui/container/inventory.png");
-    protected static final ResourceLocation MITE_icons = new ResourceLocation("textures/gui/MITE_icons.png");
-    protected static final ResourceLocation ExtraGui_icons = new ResourceLocation("textures/gui/extragui_icons.png");
-    private Minecraft mc = Minecraft.getMinecraft();
-    FontRenderer fontRenderer = mc.fontRenderer;
+    private static final int FRAME_SIZE = 24;
+    private static final int ICON_SIZE = 18;
+    private static final int POTION_FRAME_X = 0;
+    private static final int BEACON_FRAME_X = POTION_FRAME_X + FRAME_SIZE;
+    private static final int FRAME_Y = 0;
+    private static final int ICON_COLUMNS = 8;
+    private static final int ICON_Y = 198;
+    private static final int FLASH_TICKS = 200;
 
-    public GuiEffectRenderer() {
-    }
-
-    public void initGui() {
-        if (!this.mc.thePlayer.getActivePotionEffects().isEmpty() || this.mc.thePlayer.isMalnourished() || this.mc.thePlayer.isInsulinResistant() || this.mc.thePlayer.is_cursed) {
-            this.field_74222_o = true;
+    private static final ResourceLocation potionFrame = new ResourceLocation("extragui","textures/gui/potion_frame.png");
+    private static final ResourceLocation inventory = new ResourceLocation("textures/gui/container/inventory.png");
+    private static final ResourceLocation MITE_icons = new ResourceLocation("textures/gui/MITE_icons.png");
+    private static final Comparator<PotionEffect> COMPARATOR = (e1, e2) -> {
+        if (e1.getIsAmbient()) {
+            return -1;
+        } else if (e2.getIsAmbient()) {
+            return 1;
         }
-        this.initial_tick = (int) this.mc.theWorld.getTotalWorldTime();
-    }
+        return Integer.compare(e1.getDuration(), e2.getDuration());
+    };
+    
+    public void renderEffectHud(Minecraft mc) {
+        Collection<PotionEffect> potionEffects = mc.thePlayer.getActivePotionEffects();
+//        if (potionEffects.isEmpty()) { return; }
+//        if (!(mc.thePlayer.isMalnourished())) { return; }
+//        if (!(mc.thePlayer.is_cursed)) { return; }
+//        if (!(mc.thePlayer.isInsulinResistant())) { return; }
 
-    public void drawScreen(int par1, int par2, float par3) {
-        if (this.field_74222_o) {
-            this.displayDebuffEffects();
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+        int scaledWidth = (new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight)).getScaledWidth();
+        int offset = (FRAME_SIZE - ICON_SIZE) / 2;
+
+        int iconXMITE = scaledWidth;
+        int iconYMITE = 1;
+        iconXMITE -= (FRAME_SIZE + 1);
+        iconYMITE += FRAME_SIZE * 2 + 4;
+
+        if (mc.thePlayer.isMalnourished()) {
+            mc.renderEngine.bindTexture(potionFrame);
+            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+            drawTexturedModalRect(iconXMITE, iconYMITE, POTION_FRAME_X, FRAME_Y, FRAME_SIZE, FRAME_SIZE);
+            mc.getTextureManager().bindTexture(MITE_icons);
+            int ICON_Y_MITE = 18;
+            drawTexturedModalRect(iconXMITE + offset, iconYMITE + offset, ICON_Y_MITE, 198, 18, 18);
+            iconXMITE -= (FRAME_SIZE + 1);
         }
-    }
+        if (mc.thePlayer.is_cursed) {
+            mc.renderEngine.bindTexture(potionFrame);
+            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+            drawTexturedModalRect(iconXMITE, iconYMITE, POTION_FRAME_X, FRAME_Y, FRAME_SIZE, FRAME_SIZE);
+            mc.getTextureManager().bindTexture(MITE_icons);
+            int ICON_Y_MITE = 0;
+            drawTexturedModalRect(iconXMITE + offset, iconYMITE + offset, ICON_Y_MITE, 198, 18, 18);
+            iconXMITE -= (FRAME_SIZE + 1);
+        }
+        if (mc.thePlayer.isInsulinResistant()) {
+            mc.renderEngine.bindTexture(potionFrame);
+            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+            drawTexturedModalRect(iconXMITE, iconYMITE, POTION_FRAME_X, FRAME_Y, FRAME_SIZE, FRAME_SIZE);
+            mc.getTextureManager().bindTexture(MITE_icons);
+            int ICON_Y_MITE = 54;
+            drawTexturedModalRect(iconXMITE + offset, iconYMITE + offset, ICON_Y_MITE, 198, 18, 18);
+            iconXMITE -= (FRAME_SIZE + 1);
+        }
 
-    public void displayMiniDebuffEffects() {
-        Point pos = new Point(ExtraGuiConfig.EffectX.getIntegerValue(), ExtraGuiConfig.EffectY.getIntegerValue());
-        Dimension size = DisplayUtil.displaySize();
-        int x = ((int) (size.width / ExtraGuiConfig.EffectSize.getDoubleValue()) - 1) * pos.x / 100;
-        int y = ((int) (size.height / ExtraGuiConfig.EffectSize.getDoubleValue()) - 1) * pos.y / 100;
-        GL11.glPushMatrix();
+        List<PotionEffect> potionList = potionEffects.stream()
+                .sorted(COMPARATOR)
+                .collect(Collectors.toList());
 
-        GL11.glScalef((float) ExtraGuiConfig.EffectSize.getDoubleValue(), (float) ExtraGuiConfig.EffectSize.getDoubleValue(), 1.0f);
+        for (PotionEffect effect : potionList) {
+            Potion potion = Potion.potionTypes[effect.getPotionID()];
+            if (!potion.hasStatusIcon()) { return; }
+            int goodCount = 0;
+            int badCount = 0;
 
+            // Determine coordinates to place icons.
+            int iconX = scaledWidth;
+            int iconY = 1;
 
-        Collection var4 = this.mc.thePlayer.getActivePotionEffects();
-        int var5 = var4.size();
-
-        if (ExtraGuiConfig.DisplayEffect.getBooleanValue() && !this.mc.gameSettings.showDebugInfo) {
-            if (this.mc.thePlayer.isMalnourished()) {
-                ++var5;
+            if (potion.isBadEffect()) {
+                badCount++;
+                iconX -= (FRAME_SIZE + 1) * badCount;
+                iconY += FRAME_SIZE + 2;
+            } else {
+                goodCount++;
+                iconX -= (FRAME_SIZE + 1) * goodCount;
             }
 
-            if (this.mc.thePlayer.isInsulinResistant()) {
-                ++var5;
+            // Draw background frame.
+            mc.renderEngine.bindTexture(potionFrame);
+            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+            int frameX = effect.getIsAmbient() ? BEACON_FRAME_X : POTION_FRAME_X;
+            drawTexturedModalRect(iconX, iconY, frameX, FRAME_Y, FRAME_SIZE, FRAME_SIZE);
+
+            // Draw potion icon.
+            if (potion.hasStatusIcon()) {
+                mc.renderEngine.bindTexture(inventory);
+                GL11.glColor4f(1.0f, 1.0f, 1.0f, getAlpha(effect));
+                int iconIndex = potion.getStatusIconIndex();
+                drawTexturedModalRect(iconX + offset, iconY + offset,
+                        (iconIndex % ICON_COLUMNS) * ICON_SIZE,
+                        (iconIndex / ICON_COLUMNS) * ICON_SIZE + ICON_Y,
+                        ICON_SIZE, ICON_SIZE);
             }
-
-            if (this.mc.thePlayer.is_cursed) {
-                ++var5;
-            }
-
-            if (var5 > 0) {
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                GL11.glDisable(GL11.GL_LIGHTING);
-                int var6 = 33;
-
-                if (var5 > 5) {
-                    var6 = 132 / (var5 - 1);
-                }
-
-                String var7;
-                String var8;
-                TextureManager var10000;
-
-                if (this.mc.thePlayer.isMalnourished()) {
-                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                    this.mc.getTextureManager().bindTexture(ExtraGui_icons);
-                    if (ExtraGuiConfig.DisplayEffectBackGround.getBooleanValue())
-                        this.drawTexturedModalRect(x, y, 0, 0, 32, 32);
-                    var10000 = this.mc.getTextureManager();
-                    var10000.bindTexture(MITE_icons);
-                    this.drawTexturedModalRect(x + 6, y + 7, 18, 198, 18, 18);
-//                    var7 = I18n.getString("effect.malnourished");
-//                    this.fontRenderer.drawStringWithShadow(var7, x + 10 + 18 - 1, y + 6 + 1, ExtraGuiConfig.EffectColor.getColorInteger());
-//                    var8 = ((int) this.mc.theWorld.getTotalWorldTime() - this.initial_tick) / 100 % 2 == 0 ? I18n.getString("effect.malnourished.slowHealing") : I18n.getString("effect.malnourished.plus50PercentHunger");
-//                    this.fontRenderer.drawStringWithShadow(var8, x + 10 + 18 - 1, y + 6 + 10 + 1, 8355711);
-                    x -= var6;
-                }
-
-                if (this.mc.thePlayer.isInsulinResistant()) {
-                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                    this.mc.getTextureManager().bindTexture(ExtraGui_icons);
-                    if (ExtraGuiConfig.DisplayEffectBackGround.getBooleanValue())
-                        this.drawTexturedModalRect(x, y, 0, 0, 32, 32);
-                    this.mc.getTextureManager().bindTexture(sugar_icon);
-                    this.drawTexturedModalRect2(x + 7, y + 8, 16, 16);
-                    EnumInsulinResistanceLevel var12 = this.mc.thePlayer.getInsulinResistanceLevel();
-                    GL11.glColor4f(var12.getRedAsFloat(), var12.getGreenAsFloat(), var12.getBlueAsFloat(), 1.0F);
-                    var10000 = this.mc.getTextureManager();
-                    var10000.bindTexture(MITE_icons);
-                    this.drawTexturedModalRect(x + 6, y + 7, 54, 198, 18, 18);
-                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-//                    var8 = I18n.getString("effect.insulinResistance");
-//                    this.fontRenderer.drawStringWithShadow(var8, x + 10 + 18 - 1, y + 6 + 1, ExtraGuiConfig.EffectColor.getColorInteger());
-//                    String var9 = StringUtils.ticksToElapsedTime(this.mc.thePlayer.getInsulinResistance());
-//                    this.fontRenderer.drawStringWithShadow(var9, x + 10 + 18 - 1, y + 6 + 10 + 1, 8355711);
-                    x -= var6;
-                }
-
-                if (this.mc.thePlayer.is_cursed) {
-                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                    this.mc.getTextureManager().bindTexture(ExtraGui_icons);
-                    if (ExtraGuiConfig.DisplayEffectBackGround.getBooleanValue())
-                        this.drawTexturedModalRect(x, y, 0, 0, 32, 32);
-                    var10000 = this.mc.getTextureManager();
-                    var10000.bindTexture(MITE_icons);
-                    this.drawTexturedModalRect(x + 6, y + 7, 0, 198, 18, 18);
-//                    var7 = I18n.getString("effect.cursed");
-//                    this.fontRenderer.drawStringWithShadow(var7, x + 10 + 18 - 1, y + 6 + 1, ExtraGuiConfig.EffectColor.getColorInteger());
-//                    var8 = this.mc.thePlayer.curse_effect_known ? EnumChatFormatting.DARK_PURPLE + this.mc.thePlayer.getCurse().getTitle() : Translator.get("curse.unknown");
-//                    this.fontRenderer.drawStringWithShadow(var8, x + 10 + 18 - 1, y + 6 + 10 + 1, 8355711);
-                    x -= var6;
-                }
-
-                for (Iterator var13 = this.mc.thePlayer.getActivePotionEffects().iterator(); var13.hasNext(); x -= var6) {
-                    PotionEffect var14 = (PotionEffect) var13.next();
-                    Potion var15 = Potion.potionTypes[var14.getPotionID()];
-                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                    this.mc.getTextureManager().bindTexture(ExtraGui_icons);
-                    if (ExtraGuiConfig.DisplayEffectBackGround.getBooleanValue())
-                        this.drawTexturedModalRect(x, y, 0, 0, 32, 32);
-
-                    this.mc.getTextureManager().bindTexture(inventory_texture);
-                    if (var15.hasStatusIcon()) {
-                        int var10 = var15.getStatusIconIndex();
-                        this.drawTexturedModalRect(x + 6, y + 7, 0 + var10 % 8 * 18, 198 + var10 / 8 * 18, 18, 18);
-                    }
-                    if (((IPotion) var15).ric$UsesIndividualTexture()) {
-                        this.mc.getTextureManager().bindTexture(((IPotion) var15).ric$GetTexture());
-                        this.drawTexturedModalRect2(x + 6, y + 7, 18, 18);
-                    }
-
-//                    String var16 = I18n.getString(var15.getName());
-//
-//                    if (var14.getAmplifier() == 1) {
-//                        var16 = var16 + " II";
-//                    } else if (var14.getAmplifier() == 2) {
-//                        var16 = var16 + " III";
-//                    } else if (var14.getAmplifier() == 3) {
-//                        var16 = var16 + " IV";
-//                    }
-//
-//                    this.fontRenderer.drawStringWithShadow(var16, x + 10 + 18 - 1, y + 6 + 1, ExtraGuiConfig.EffectColor.getColorInteger());
-//                    String var11 = Potion.getDurationString(var14);
-//                    this.fontRenderer.drawStringWithShadow(var11, x + 10 + 18 - 1, y + 6 + 10 + 1, 8355711);
-                }
+            if (((IPotion) potion).ric$UsesIndividualTexture()) {
+                mc.getTextureManager().bindTexture(((IPotion) potion).ric$GetTexture());
+                drawTexturedModalRect2(iconX + offset, iconY + offset, 18, 18);
             }
         }
-        GL11.glPopMatrix();
     }
 
-    public void displayDebuffEffects() {
-        Point pos = new Point(ExtraGuiConfig.EffectX.getIntegerValue(), ExtraGuiConfig.EffectY.getIntegerValue());
-        Dimension size = DisplayUtil.displaySize();
-        int x = ((int) (size.width / ExtraGuiConfig.EffectSize.getDoubleValue()) - 1) * pos.x / 100;
-        int y = ((int) (size.height / ExtraGuiConfig.EffectSize.getDoubleValue()) - 1) * pos.y / 100;
-        GL11.glPushMatrix();
+    private float getAlpha(PotionEffect effect) {
+        if (effect.getIsAmbient() || effect.getDuration() > FLASH_TICKS) { return 1.0f; }
 
-        GL11.glScalef((float) ExtraGuiConfig.EffectSize.getDoubleValue(), (float) ExtraGuiConfig.EffectSize.getDoubleValue(), 1.0f);
-
-
-        Collection var4 = this.mc.thePlayer.getActivePotionEffects();
-        int var5 = var4.size();
-
-        if (ExtraGuiConfig.DisplayEffect.getBooleanValue() && !this.mc.gameSettings.showDebugInfo) {
-            if (this.mc.thePlayer.isMalnourished()) {
-                ++var5;
-            }
-
-            if (this.mc.thePlayer.isInsulinResistant()) {
-                ++var5;
-            }
-
-            if (this.mc.thePlayer.is_cursed) {
-                ++var5;
-            }
-
-            if (var5 > 0) {
-                GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                GL11.glDisable(GL11.GL_LIGHTING);
-                int var6 = 33;
-
-                if (var5 > 5) {
-                    var6 = 132 / (var5 - 1);
-                }
-
-                String var7;
-                String var8;
-                TextureManager var10000;
-
-                if (this.mc.thePlayer.isMalnourished()) {
-                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                    this.mc.getTextureManager().bindTexture(inventory_texture);
-                    if (ExtraGuiConfig.DisplayEffectBackGround.getBooleanValue())
-                        this.drawTexturedModalRect(x, y, 0, 166, 140, 32);
-                    var10000 = this.mc.getTextureManager();
-                    var10000.bindTexture(MITE_icons);
-                    if (ExtraGuiConfig.DisplayEffectBackGround.getBooleanValue())
-                        this.drawTexturedModalRect(x + 6, y + 7, 18, 198, 18, 18);
-                    var7 = I18n.getString("effect.malnourished");
-                    this.fontRenderer.drawStringWithShadow(var7, x + 10 + 18 - 1, y + 6 + 1, ExtraGuiConfig.EffectColor.getColorInteger());
-                    var8 = ((int) this.mc.theWorld.getTotalWorldTime() - this.initial_tick) / 100 % 2 == 0 ? I18n.getString("effect.malnourished.slowHealing") : I18n.getString("effect.malnourished.plus50PercentHunger");
-                    this.fontRenderer.drawStringWithShadow(var8, x + 10 + 18 - 1, y + 6 + 10 + 1, 8355711);
-                    y += var6;
-                }
-
-                if (this.mc.thePlayer.isInsulinResistant()) {
-                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                    this.mc.getTextureManager().bindTexture(inventory_texture);
-                    if (ExtraGuiConfig.DisplayEffectBackGround.getBooleanValue())
-                        this.drawTexturedModalRect(x, y, 0, 166, 140, 32);
-                    this.mc.getTextureManager().bindTexture(sugar_icon);
-                    this.drawTexturedModalRect2(x + 7, y + 8, 16, 16);
-                    EnumInsulinResistanceLevel var12 = this.mc.thePlayer.getInsulinResistanceLevel();
-                    GL11.glColor4f(var12.getRedAsFloat(), var12.getGreenAsFloat(), var12.getBlueAsFloat(), 1.0F);
-                    var10000 = this.mc.getTextureManager();
-                    var10000.bindTexture(MITE_icons);
-                    this.drawTexturedModalRect(x + 6, y + 7, 54, 198, 18, 18);
-                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                    var8 = I18n.getString("effect.insulinResistance");
-                    this.fontRenderer.drawStringWithShadow(var8, x + 10 + 18 - 1, y + 6 + 1, ExtraGuiConfig.EffectColor.getColorInteger());
-                    String var9 = StringUtils.ticksToElapsedTime(this.mc.thePlayer.getInsulinResistance());
-                    this.fontRenderer.drawStringWithShadow(var9, x + 10 + 18 - 1, y + 6 + 10 + 1, 8355711);
-                    y += var6;
-                }
-
-                if (this.mc.thePlayer.is_cursed) {
-                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                    this.mc.getTextureManager().bindTexture(inventory_texture);
-                    if (ExtraGuiConfig.DisplayEffectBackGround.getBooleanValue())
-                        this.drawTexturedModalRect(x, y, 0, 166, 140, 32);
-                    var10000 = this.mc.getTextureManager();
-                    var10000.bindTexture(MITE_icons);
-                    this.drawTexturedModalRect(x + 6, y + 7, 0, 198, 18, 18);
-                    var7 = I18n.getString("effect.cursed");
-                    this.fontRenderer.drawStringWithShadow(var7, x + 10 + 18 - 1, y + 6 + 1, ExtraGuiConfig.EffectColor.getColorInteger());
-                    var8 = this.mc.thePlayer.curse_effect_known ? EnumChatFormatting.DARK_PURPLE + this.mc.thePlayer.getCurse().getTitle() : Translator.get("curse.unknown");
-                    this.fontRenderer.drawStringWithShadow(var8, x + 10 + 18 - 1, y + 6 + 10 + 1, 8355711);
-                    y += var6;
-                }
-
-                for (Iterator var13 = this.mc.thePlayer.getActivePotionEffects().iterator(); var13.hasNext(); y += var6) {
-                    PotionEffect var14 = (PotionEffect) var13.next();
-                    Potion var15 = Potion.potionTypes[var14.getPotionID()];
-                    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-                    this.mc.getTextureManager().bindTexture(inventory_texture);
-                    if (ExtraGuiConfig.DisplayEffectBackGround.getBooleanValue())
-                        this.drawTexturedModalRect(x, y, 0, 166, 140, 32);
-
-                    if (var15.hasStatusIcon()) {
-                        int var10 = var15.getStatusIconIndex();
-                        this.drawTexturedModalRect(x + 6, y + 7, 0 + var10 % 8 * 18, 198 + var10 / 8 * 18, 18, 18);
-                    }
-
-                    if (((IPotion) var15).ric$UsesIndividualTexture()) {
-                        this.mc.getTextureManager().bindTexture(((IPotion) var15).ric$GetTexture());
-                        this.drawTexturedModalRect2(x + 6, y + 7, 18, 18);
-                    }
-
-                    String var16 = I18n.getString(var15.getName());
-
-                    if (var14.getAmplifier() == 1) {
-                        var16 = var16 + " II";
-                    } else if (var14.getAmplifier() == 2) {
-                        var16 = var16 + " III";
-                    } else if (var14.getAmplifier() == 3) {
-                        var16 = var16 + " IV";
-                    }
-
-                    this.fontRenderer.drawStringWithShadow(var16, x + 10 + 18 - 1, y + 6 + 1, ExtraGuiConfig.EffectColor.getColorInteger());
-                    String var11 = Potion.getDurationString(var14);
-                    this.fontRenderer.drawStringWithShadow(var11, x + 10 + 18 - 1, y + 6 + 10 + 1, 8355711);
-                }
-            }
-        }
-        GL11.glPopMatrix();
+        int temp = 10 - effect.getDuration() / 20;
+        return MathHelper.clamp_float(effect.getDuration() / 100.0f, 0.0f, 0.5f)
+                + MathHelper.cos((float) (effect.getDuration() * Math.PI / 5.0f))
+                * MathHelper.clamp_float(temp / 40.0f, 0.0f, 0.25f);
     }
 
 }

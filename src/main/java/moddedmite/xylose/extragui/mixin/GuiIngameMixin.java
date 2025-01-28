@@ -1,28 +1,35 @@
 package moddedmite.xylose.extragui.mixin;
 
 import fi.dy.masa.malilib.config.options.ConfigBase;
+import moddedmite.rustedironcore.api.interfaces.IPotion;
 import moddedmite.xylose.extragui.config.ConfigInfo;
 import moddedmite.xylose.extragui.config.ExtraGuiConfig;
 import moddedmite.xylose.extragui.gui.*;
 import net.minecraft.*;
+import net.xiaoyu233.fml.FishModLoader;
+import org.lwjgl.opengl.GL11;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static net.minecraft.Minecraft.inDevMode;
 
 @Mixin(GuiIngame.class)
 public class GuiIngameMixin extends Gui {
-    @Shadow
-    @Final
-    private Minecraft mc;
+    @Shadow @Final private Minecraft mc;
+
 
     @Inject(method = {"renderGameOverlay(FZII)V"},
             at = {@At(value = "INVOKE",
@@ -36,10 +43,7 @@ public class GuiIngameMixin extends Gui {
 //            GuiWorldTitle guiWorldTitle = new GuiWorldTitle();
 
             guiDurability.renderDurability();
-            if (ExtraGuiConfig.MiniEffect.getBooleanValue())
-                inventoryEffectRenderer.displayMiniDebuffEffects();
-            else
-                inventoryEffectRenderer.displayDebuffEffects();
+            inventoryEffectRenderer.renderEffectHud(mc);
             guiDebugInfo.renderDebugInfoOverlay(mc);
 //            guiWorldTitle.renderWorldTitle(mc);
         }
@@ -70,6 +74,8 @@ public class GuiIngameMixin extends Gui {
             else
                 strings.add(configInfo.getString(this.mc));
         }
+        strings.add(GuiMiniInfoHandle.getInstance().getCustomString());
+
         GuiMiniInfoHandle.getInstance().renderDebugInfo(strings);
     }
 

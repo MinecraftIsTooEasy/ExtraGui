@@ -10,18 +10,14 @@ config.name.extraGui.DurabilityColor=Durability Color
 
 ## effect
 config.name.extraGui.DisplayEffect=Display Effect
-config.name.extraGui.DisplayEffectBackGround=Display Effect BackGround
-config.name.extraGui.MiniEffect=Mini Effect
-config.name.extraGui.EffectX=Effect X
-config.name.extraGui.EffectY=Effect Y
-config.name.extraGui.EffectSize=EffectS ize
-config.name.extraGui.EffectColor=Effect Color
 
 ## infos
 config.name.extraGui.fps=FPS
 config.name.extraGui.mem=Mem
 config.name.extraGui.realTime=Real Time
 config.name.extraGui.time=Time
+config.name.extraGui.overWorldTime=OverWorld Time
+config.comment.extraGui.overWorldTime=When in a non-OverWorld, the time in the OverWorld is displayed
 config.name.extraGui.position=Position
 config.name.extraGui.dimensionPosition=Dimension Position
 config.comment.extraGui.dimensionPosition=When in a non-Nether, the corresponding Nether location is displayed, and when in the Nether, the corresponding Overworld location is displayed
@@ -33,6 +29,7 @@ config.name.extraGui.biome=Biome
 config.name.extraGui.weather=Weather
 config.name.extraGui.moonPhases=Moon Phases
 config.name.extraGui.dimension=Dimension
+config.name.extraGui.customString=Custom Tagline
 
 config.name.extraGui.cancelDevInfo=Cancel Dev Info
 config.name.extraGui.showInfo=Show Info
@@ -54,7 +51,8 @@ config.name.extraGui.ItemRenderSize=Item Render Size
 ## hotkeys
 config.name.extraGui.toggleShowInfo=Toggle Show Info
 config.name.extraGui.Stats=Player Stats
-config.name.extraGui.MobStats=MobS tats
+config.name.extraGui.MobStats=Mob Stats
+config.name.extraGui.toggleDisplayEffect=Toggle Display Effect
 
 ## config tab
 config.tab.extraGui.durability=Durability
@@ -69,6 +67,7 @@ extraGui.formatter.mem.allocated=Allocated:
 extraGui.formatter.nether=Nether:
 extraGui.formatter.overworld=Overworld:
 extraGui.formatter.time=(Day %s) %d:%d:xx
+extraGui.formatter.time.overworld=OverWorld: (Day %s) %d:%d:xx
 extraGui.formatter.direction.east=East(Positive X)
 extraGui.formatter.direction.south=South(Positive Z)
 extraGui.formatter.direction.west=West(Negative X)

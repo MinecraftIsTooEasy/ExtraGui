@@ -29,12 +29,6 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final ConfigColor DurabilityColor = new ConfigColor("extraGui.DurabilityColor", "#FFFFFFFF");
 
     public static final ConfigBoolean DisplayEffect = new ConfigBoolean("extraGui.DisplayEffect", true);
-    public static final ConfigBoolean DisplayEffectBackGround = new ConfigBoolean("extraGui.DisplayEffectBackGround", true);
-    public static final ConfigBoolean MiniEffect = new ConfigBoolean("extraGui.MiniEffect", true);
-    public static final ConfigInteger EffectX = new ConfigInteger("extraGui.EffectX", 94, 0, 100);
-    public static final ConfigInteger EffectY = new ConfigInteger("extraGui.EffectY", 0, 0, 100);
-    public static final ConfigDouble EffectSize = new ConfigDouble("extraGui.EffectSize", 1.0F, 0.1F, 2.0F);
-    public static final ConfigColor EffectColor = new ConfigColor("extraGui.EffectColor", "#FFFFFFFF");
 
     public static final ConfigBoolean DisableDevInfo = new ConfigBoolean("extraGui.cancelDevInfo", true);
     public static final ConfigBoolean ShowInfo = new ConfigBoolean("extraGui.showInfo", true);
@@ -50,6 +44,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final ConfigInfo Mem = new ConfigInfo("extraGui.mem", false, mc -> GuiMiniInfoHandle.getInstance().getMem());
     public static final ConfigInfo RealTime = new ConfigInfo("extraGui.realTime", true, false, mc -> GuiMiniInfoHandle.getInstance().getRealTime());
     public static final ConfigInfo MCTime = new ConfigInfo("extraGui.time", true, mc -> GuiMiniInfoHandle.getInstance().getTime(mc.theWorld));
+    public static final ConfigBoolean OverWorldTime = new ConfigBoolean("extraGui.overWorldTime", true, "extraGui.overWorldTime");
     public static final ConfigInfo Position = new ConfigInfo("extraGui.position", true, false, mc -> GuiMiniInfoHandle.getInstance().getPosition(mc.theWorld));
     public static final ConfigBoolean DimensionPosition = new ConfigBoolean("extraGui.dimensionPosition", false, "extraGui.dimensionPosition");
     public static final ConfigInfo ChunkPosition = new ConfigInfo("extraGui.chunkPosition", false, mc -> GuiMiniInfoHandle.getInstance().getChunkPosition());
@@ -59,7 +54,8 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final ConfigInfo Light = new ConfigInfo("extraGui.light", false, mc -> GuiMiniInfoHandle.getInstance().getLightInfo(mc));
     public static final ConfigInfo Biome = new ConfigInfo("extraGui.biome", false, mc -> BiomeNameI18n.getBiomeNameI18n(mc.thePlayer.getBiome()));
     public static final ConfigInfo Dimension = new ConfigInfo("extraGui.dimension", false, mc -> GuiMiniInfoHandle.getInstance().getDimension(mc.theWorld));
-    public static final ConfigInfo MoonPhases = new ConfigInfo("extraGui.moonPhases", false, mc -> GuiMiniInfoHandle.getInstance().getMoonPhases(mc.theWorld));
+    public static final ConfigInfo MoonPhases = new ConfigInfo("extraGui.moonPhases", true, mc -> GuiMiniInfoHandle.getInstance().getMoonPhases(mc.theWorld));
+    public static final ConfigString CustomString = new ConfigString("extraGui.customString", "");
 
     public static final ConfigBoolean DisplayItemRender = new ConfigBoolean("extraGui.DisplayItemRender", false);
     public static final ConfigInteger ItemRenderX = new ConfigInteger("extraGui.ItemRenderX", 5, 0, 100);
@@ -78,7 +74,8 @@ public class ExtraGuiConfig extends SimpleConfigs {
 
     public static final ConfigHotkey ToggleInfo = new ConfigHotkey("extraGui.toggleShowInfo", Keyboard.KEY_H);
     public static final ConfigHotkey Stats = new ConfigHotkey("extraGui.Stats", Keyboard.KEY_P);
-    public static final ConfigHotkey MobStats = new ConfigHotkey("extraGui.MobStats", KeyCodes.getStorageString(29, 25));
+    public static final ConfigHotkey MobStats = new ConfigHotkey("extraGui.MobStats", "LCONTROL,P", "");
+    public static final ConfigHotkey ToggleDisplayEffect = new ConfigHotkey("extraGui.toggleDisplayEffect", "LCONTROL,F", "");
 
     private static final ExtraGuiConfig Instance;
     public static final List<ConfigBase<?>> configValues;
@@ -98,12 +95,12 @@ public class ExtraGuiConfig extends SimpleConfigs {
 
     static {
         durability = List.of(DisplayDurability, DurabilityPercentageDisplay, DurabilityLine, DurabilityX, DurabilityY, DurabilitySize, DurabilityColor);
-        effect = List.of(DisplayEffect, DisplayEffectBackGround, MiniEffect, EffectX, EffectY, EffectSize, EffectColor);
+        effect = List.of(DisplayEffect);
         info = List.of(ShowInfo, DisableDevInfo, RightAlign, background, timeZone, InfoXLevel, InfoYLevel, InfoSize, infoColor);
-        presentInfo = List.of(FPS, Mem, RealTime, MCTime, Position, DimensionPosition, ChunkPosition, Direction, YawPitchSpeed, Weather, Light, Biome, Dimension, MoonPhases);
+        presentInfo = List.of(FPS, Mem, RealTime, MCTime, Position, DimensionPosition, ChunkPosition, Direction, YawPitchSpeed, Weather, Light, Biome, Dimension, MoonPhases, CustomString);
         itemRender = List.of(DisplayItemRender, ItemRenderX, ItemRenderY, ItemRenderSize);
 //        worldTitle = List.of(DisplayWorldTitle, WorldTitleX, WorldTitleY, WorldTitleSize, WorldTitleAlpha, WorldTitleDisplayTime, WorldTitleFadeOut, WorldTitleColor);
-        hotkeys = List.of(ToggleInfo, Stats, MobStats);
+        hotkeys = List.of(ToggleInfo, Stats, MobStats, ToggleDisplayEffect);
 
         configValues = new ArrayList<>();
         configValues.addAll(durability);
@@ -126,6 +123,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
         ToggleInfo.setHotKeyPressCallBack(minecraft -> ShowInfo.toggleBooleanValue());
         Stats.setHotKeyPressCallBack(minecraft -> minecraft.displayGuiScreen(new GuiEntityStats()));
         MobStats.setHotKeyPressCallBack(minecraft -> minecraft.displayGuiScreen(new GuiEntityStats(minecraft.objectMouseOver != null ? minecraft.objectMouseOver.getEntityHit().getAsEntityLiving() : minecraft.thePlayer)));
+        ToggleDisplayEffect.setHotKeyPressCallBack(minecraft -> DisplayEffect.toggleBooleanValue());
     }
 
     @Override
