@@ -32,6 +32,7 @@ config.name.extraGui.dimension=Dimension
 config.name.extraGui.customString=Custom Tagline
 
 config.name.extraGui.cancelDevInfo=Cancel Dev Info
+config.name.extraGui.cancelErrorInfo=Cancel Screen Error Info
 config.name.extraGui.showInfo=Show Info
 config.name.extraGui.RightAlign=Right Align
 config.name.extraGui.background=Background

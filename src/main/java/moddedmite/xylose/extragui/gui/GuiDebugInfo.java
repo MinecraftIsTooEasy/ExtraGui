@@ -12,7 +12,7 @@ public class GuiDebugInfo  extends Gui {
         int var6 = var5.getScaledWidth();
         int var22;
         int var23;
-        if (mc.gameSettings.showDebugInfo && Minecraft.getErrorMessage() == null && mc.gameSettings.gui_mode == 0) {
+        if (mc.gameSettings.showDebugInfo && mc.gameSettings.gui_mode == 0) {
             mc.mcProfiler.startSection("debug");
             GL11.glPushMatrix();
             var8.drawStringWithShadow("Minecraft 1.6.4-MITE " + (Minecraft.inDevMode() ? EnumChatFormatting.RED + "DEV " + EnumChatFormatting.WHITE : "") + "(" + mc.debug + ")", 2, 2, 16777215);

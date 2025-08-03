@@ -34,16 +34,16 @@ public class GuiMiniInfoHandle {
         return mc.thePlayer.getWorld().getBlockLightValue(this.x, this.y, this.z) + "/" + (15 - mc.thePlayer.getWorld().skylightSubtracted);
     }
 
-    public void renderDebugInfo(List<String> strings) {
+    public void renderMiniInfo(List<String> strings) {
         Minecraft.getMinecraft().mcProfiler.startSection("mini_info");
         GL11.glPushMatrix();
         GL11.glScalef((float) ExtraGuiConfig.InfoSize.getDoubleValue(), (float) ExtraGuiConfig.InfoSize.getDoubleValue(), 1.0f);
-        this.renderDebugInfoLeft(strings);
+        this.renderMiniInfoInner(strings);
         GL11.glPopMatrix();
         Minecraft.getMinecraft().mcProfiler.endSection();
     }
 
-    protected void renderDebugInfoLeft(List<String> strings) {
+    protected void renderMiniInfoInner(List<String> strings) {
         Point pos = new Point(ExtraGuiConfig.InfoXLevel.getIntegerValue(), ExtraGuiConfig.InfoYLevel.getIntegerValue());
         Dimension displaySize = DisplayUtil.displaySize();
         int x = ((int) (displaySize.width / ExtraGuiConfig.InfoSize.getDoubleValue()) - 1) * pos.x / 100;
@@ -68,7 +68,10 @@ public class GuiMiniInfoHandle {
                 if (ExtraGuiConfig.background.getBooleanValue()) {
                     Gui.drawRect(backgroundX, 2 + (yBase - 1), backgroundX_1, 2 + (yBase + fontHeight - 1), -1873784752);
                 }
-                fontRenderer.drawString(s, stringX, 2 + yBase, 14737632);
+                if (!ExtraGuiConfig.background.getBooleanValue())
+                    fontRenderer.drawStringWithShadow(s, stringX, 2 + yBase, 14737632);
+                else
+                    fontRenderer.drawString(s, stringX, 2 + yBase, 14737632);
             }
         }
     }

@@ -28,9 +28,8 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final ConfigDouble DurabilitySize = new ConfigDouble("extraGui.DurabilitySize", 1.0F, 0.1F, 2.0F);
     public static final ConfigColor DurabilityColor = new ConfigColor("extraGui.DurabilityColor", "#FFFFFFFF");
 
-    public static final ConfigBoolean DisplayEffect = new ConfigBoolean("extraGui.DisplayEffect", true);
-
     public static final ConfigBoolean DisableDevInfo = new ConfigBoolean("extraGui.cancelDevInfo", true);
+    public static final ConfigBoolean DisableErrorInfo = new ConfigBoolean("extraGui.cancelErrorInfo", true);
     public static final ConfigBoolean ShowInfo = new ConfigBoolean("extraGui.showInfo", true);
     public static final ConfigBoolean RightAlign = new ConfigBoolean("extraGui.RightAlign", false);
     public static final ConfigBoolean background = new ConfigBoolean("extraGui.background", true);
@@ -75,12 +74,10 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final ConfigHotkey ToggleInfo = new ConfigHotkey("extraGui.toggleShowInfo", Keyboard.KEY_H);
     public static final ConfigHotkey Stats = new ConfigHotkey("extraGui.Stats", Keyboard.KEY_P);
     public static final ConfigHotkey MobStats = new ConfigHotkey("extraGui.MobStats", "LCONTROL,P", "");
-    public static final ConfigHotkey ToggleDisplayEffect = new ConfigHotkey("extraGui.toggleDisplayEffect", "LCONTROL,F", "");
 
     private static final ExtraGuiConfig Instance;
     public static final List<ConfigBase<?>> configValues;
     public static final List<ConfigBase<?>> durability;
-    public static final List<ConfigBase<?>> effect;
     public static final List<ConfigBase<?>> presentInfo;
     public static final List<ConfigBase<?>> info;
     public static final List<ConfigBase<?>> itemRender;
@@ -95,23 +92,20 @@ public class ExtraGuiConfig extends SimpleConfigs {
 
     static {
         durability = List.of(DisplayDurability, DurabilityPercentageDisplay, DurabilityLine, DurabilityX, DurabilityY, DurabilitySize, DurabilityColor);
-        effect = List.of(DisplayEffect);
-        info = List.of(ShowInfo, DisableDevInfo, RightAlign, background, timeZone, InfoXLevel, InfoYLevel, InfoSize, infoColor);
+        info = List.of(ShowInfo, DisableDevInfo, DisableErrorInfo, RightAlign, background, timeZone, InfoXLevel, InfoYLevel, InfoSize, infoColor);
         presentInfo = List.of(FPS, Mem, RealTime, MCTime, Position, DimensionPosition, ChunkPosition, Direction, YawPitchSpeed, Weather, Light, Biome, Dimension, MoonPhases, CustomString);
         itemRender = List.of(DisplayItemRender, ItemRenderX, ItemRenderY, ItemRenderSize);
 //        worldTitle = List.of(DisplayWorldTitle, WorldTitleX, WorldTitleY, WorldTitleSize, WorldTitleAlpha, WorldTitleDisplayTime, WorldTitleFadeOut, WorldTitleColor);
-        hotkeys = List.of(ToggleInfo, Stats, MobStats, ToggleDisplayEffect);
+        hotkeys = List.of(ToggleInfo, Stats, MobStats);
 
         configValues = new ArrayList<>();
         configValues.addAll(durability);
-        configValues.addAll(effect);
         configValues.addAll(info);
         configValues.addAll(presentInfo);
         configValues.addAll(itemRender);
 //        configValues.addAll(worldTitle);
 
         tabs.add(new ConfigTab("extraGui.durability", durability));
-        tabs.add(new ConfigTab("extraGui.effect", effect));
         tabs.add(new ConfigTab("extraGui.info", info));
         tabs.add(new ConfigTab("extraGui.presentInfo", presentInfo));
         tabs.add(new ConfigTab("extraGui.itemRender", itemRender));
@@ -123,7 +117,6 @@ public class ExtraGuiConfig extends SimpleConfigs {
         ToggleInfo.setHotKeyPressCallBack(minecraft -> ShowInfo.toggleBooleanValue());
         Stats.setHotKeyPressCallBack(minecraft -> minecraft.displayGuiScreen(new GuiEntityStats()));
         MobStats.setHotKeyPressCallBack(minecraft -> minecraft.displayGuiScreen(new GuiEntityStats(minecraft.objectMouseOver != null ? minecraft.objectMouseOver.getEntityHit().getAsEntityLiving() : minecraft.thePlayer)));
-        ToggleDisplayEffect.setHotKeyPressCallBack(minecraft -> DisplayEffect.toggleBooleanValue());
     }
 
     @Override
@@ -139,7 +132,6 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public void save() {
         JsonObject root = new JsonObject();
         ConfigUtils.writeConfigBase(root, "耐久", durability);
-        ConfigUtils.writeConfigBase(root, "状态效果", effect);
         ConfigUtils.writeConfigBase(root, "信息", info);
         ConfigUtils.writeConfigBase(root, "显示信息", presentInfo);
         ConfigUtils.writeConfigBase(root, "物品渲染", itemRender);
@@ -157,7 +149,6 @@ public class ExtraGuiConfig extends SimpleConfigs {
             if (jsonElement != null && jsonElement.isJsonObject()) {
                 JsonObject root = jsonElement.getAsJsonObject();
                 ConfigUtils.readConfigBase(root, "耐久", durability);
-                ConfigUtils.readConfigBase(root, "状态效果", effect);
                 ConfigUtils.readConfigBase(root, "信息", info);
                 ConfigUtils.readConfigBase(root, "显示信息", presentInfo);
                 ConfigUtils.readConfigBase(root, "物品渲染", itemRender);

@@ -31,7 +31,8 @@ config.name.extraGui.dimension=维度
 config.name.extraGui.moonPhases=月相
 config.name.extraGui.customString=自定义标语
 
-config.name.extraGui.cancelDevInfo=取消Dev信息
+config.name.extraGui.cancelDevInfo=屏蔽Dev信息
+config.name.extraGui.cancelErrorInfo=屏蔽屏幕错误信息
 config.name.extraGui.showInfo=显示信息
 config.name.extraGui.RightAlign=以屏幕右侧对齐
 config.name.extraGui.background=背景
