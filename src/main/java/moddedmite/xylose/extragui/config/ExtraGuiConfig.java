@@ -39,7 +39,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final ConfigDouble InfoSize = new ConfigDouble("extraGui.InfoSize", 0.5F, 0.1F, 2.0F);
     public static final ConfigColor infoColor = new ConfigColor("extraGui.infoColor", "#FFFFFFFF");
 
-    public static final ConfigInfo FPS = new ConfigInfo("extraGui.fps", false, mc -> Minecraft.last_fps + "(" + Minecraft.last_fp10s + ")");
+    public static final ConfigInfo FPS = new ConfigInfo("extraGui.fps", false, mc -> GuiMiniInfoHandle.getInstance().getFps());
     public static final ConfigInfo Mem = new ConfigInfo("extraGui.mem", false, mc -> GuiMiniInfoHandle.getInstance().getMem());
     public static final ConfigInfo RealTime = new ConfigInfo("extraGui.realTime", true, false, mc -> GuiMiniInfoHandle.getInstance().getRealTime());
     public static final ConfigInfo MCTime = new ConfigInfo("extraGui.time", true, mc -> GuiMiniInfoHandle.getInstance().getTime(mc.theWorld));
@@ -54,6 +54,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final ConfigInfo Biome = new ConfigInfo("extraGui.biome", false, mc -> BiomeNameI18n.getBiomeNameI18n(mc.thePlayer.getBiome()));
     public static final ConfigInfo Dimension = new ConfigInfo("extraGui.dimension", false, mc -> GuiMiniInfoHandle.getInstance().getDimension(mc.theWorld));
     public static final ConfigInfo MoonPhases = new ConfigInfo("extraGui.moonPhases", true, mc -> GuiMiniInfoHandle.getInstance().getMoonPhases(mc.theWorld));
+    public static final ConfigBoolean OnePercentLowFps = new ConfigBoolean("extraGui.onePercentLowFps", true);
     public static final ConfigString CustomString = new ConfigString("extraGui.customString", "");
 
     public static final ConfigBoolean DisplayItemRender = new ConfigBoolean("extraGui.DisplayItemRender", false);
@@ -93,7 +94,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
     static {
         durability = List.of(DisplayDurability, DurabilityPercentageDisplay, DurabilityLine, DurabilityX, DurabilityY, DurabilitySize, DurabilityColor);
         info = List.of(ShowInfo, DisableDevInfo, DisableErrorInfo, RightAlign, background, timeZone, InfoXLevel, InfoYLevel, InfoSize, infoColor);
-        presentInfo = List.of(FPS, Mem, RealTime, MCTime, Position, DimensionPosition, ChunkPosition, Direction, YawPitchSpeed, Weather, Light, Biome, Dimension, MoonPhases, CustomString);
+        presentInfo = List.of(FPS, Mem, RealTime, MCTime, Position, DimensionPosition, ChunkPosition, Direction, YawPitchSpeed, Weather, Light, Biome, Dimension, MoonPhases, OnePercentLowFps, CustomString);
         itemRender = List.of(DisplayItemRender, ItemRenderX, ItemRenderY, ItemRenderSize);
 //        worldTitle = List.of(DisplayWorldTitle, WorldTitleX, WorldTitleY, WorldTitleSize, WorldTitleAlpha, WorldTitleDisplayTime, WorldTitleFadeOut, WorldTitleColor);
         hotkeys = List.of(ToggleInfo, Stats, MobStats);

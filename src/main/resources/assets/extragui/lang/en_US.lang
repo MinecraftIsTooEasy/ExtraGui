@@ -29,6 +29,7 @@ config.name.extraGui.biome=Biome
 config.name.extraGui.weather=Weather
 config.name.extraGui.moonPhases=Moon Phases
 config.name.extraGui.dimension=Dimension
+config.name.extraGui.onePercentLowFps=1%Low Fps
 config.name.extraGui.customString=Custom Tagline
 
 config.name.extraGui.cancelDevInfo=Cancel Dev Info
@@ -124,3 +125,33 @@ biome.jungleHills.name=Jungle Hills
 biome.desertRiver.name=Desert River
 biome.jungleRiver.name=Jungle River
 biome.swampRiver.name=Swamp River
+
+## stats
+extragui.stats.level=Level: %s
+extragui.stats.level.modifier=(+%s harvesting，+ %s crafting， +%s melee)
+extragui.stats.exp=XP: %s
+extragui.stats.health=Health: %s / %s
+extragui.stats.satiation=Satiation: %s / %s
+extragui.stats.nutrition=Nutrition: %s / %s
+extragui.stats.protein=Protein: %s (%s%%)
+extragui.stats.essential_fats=Essential Fats: %s (%s%%)
+extragui.stats.phytonutrients=Hhytonutrients: %s (%s%%)
+extragui.stats.insulin_response=Insulin Response: %s
+extragui.stats.insulin_response.detail=(Mild: %s%%，Moderate: %s%%，Severe: %s%%，Max: %s%%)
+extragui.stats.protect=Protect
+extragui.stats.protect.generic=Generic: %s
+extragui.stats.protect.falls=Falls: %s
+extragui.stats.protect.fire=Fire: %s
+extragui.stats.protect.projectiles=Projectiles: %s
+extragui.stats.melee=Melee Damage:
+extragui.stats.none=(None)
+extragui.stats.resistance=Resistance
+extragui.stats.resistance.poison=Poison: %s%%
+extragui.stats.resistance.paralysis==Paralysis: %s%%
+extragui.stats.resistance.drain=Drain: %s%%
+extragui.stats.resistance.shadow=Shadow: %s%%
+extragui.stats.potion=Potion Effect
+extragui.stats.equipment=Equipment
+extragui.stats.equipment.held=Held: %s
+extragui.stats.equipment.worn=Worn[%s]: %s
+extragui.stats.invertory=Invertory

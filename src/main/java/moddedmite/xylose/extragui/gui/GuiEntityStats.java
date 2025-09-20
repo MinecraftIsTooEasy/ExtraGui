@@ -34,7 +34,7 @@ public class GuiEntityStats extends GuiScreen {
     protected void actionPerformed(GuiButton par1GuiButton) {
         if (par1GuiButton.id == 1) {
             page += 1;
-            if (page == 4)
+            if (page >= 4)
                 page = 1;
         }
     }
@@ -46,6 +46,10 @@ public class GuiEntityStats extends GuiScreen {
         int var1 = (this.width - 248) / 2;
         int var2 = (this.height - 166) / 2;
         this.drawTexturedModalRect(var1, var2, 0, 0, 248, 166);
+    }
+    
+    private void lineBreak() {
+        y += 12;
     }
 
     public void drawScreen(int par1, int par2, float par3) {
@@ -63,59 +67,59 @@ public class GuiEntityStats extends GuiScreen {
                     this.fontRenderer.drawString(player.getEntityName(), x, y, 2039583);
                 else
                     this.fontRenderer.drawString(entityLivingBase.getEntityName(), x, y, 2039583);
-                y += 12;
+                this.lineBreak();
                 if (entityLivingBase == player) {
-                    int riding_entity = Math.round(player.getLevelModifier(EnumLevelBonus.HARVESTING) * 100.0F);
+                    int level_modifier_harvesting = Math.round(player.getLevelModifier(EnumLevelBonus.HARVESTING) * 100.0F);
                     int level_modifier_crafting = Math.round(player.getLevelModifier(EnumLevelBonus.CRAFTING) * 100.0F);
                     int level_modifier_melee = Math.round(player.getLevelModifier(EnumLevelBonus.MELEE_DAMAGE) * 100.0F);
-                    this.fontRenderer.drawString("Level: " + player.getExperienceLevel(), x, y, 2039583);
-                    y += 12;
-                    this.fontRenderer.drawString("(" + (riding_entity < 0 ? "" : "+") + riding_entity + "% harvesting, " + ((level_modifier_crafting < 0 ? "" : "+") + level_modifier_crafting + "% crafting, " + ((level_modifier_melee < 0 ? "" : "+") + level_modifier_melee + "% melee)")), x, y, 2039583);
-                    y += 12;
-                    this.fontRenderer.drawString(("XP: " + player.experience), x, y, 2039583);
-                    y += 12;
-                    this.fontRenderer.drawString(("Health: " + StringHelper.formatFloat(player.getHealth(), 1, 1) + "/" + player.getMaxHealth()), x, y, 2039583);
-                    y += 12;
-                    this.fontRenderer.drawString(("Satiation: " + player.getSatiation() + "/" + player.getSatiationLimit()), x, y, 2039583);
-                    y += 12;
-                    this.fontRenderer.drawString(("Nutrition: " + player.getNutrition() + "/" + player.getNutritionLimit()), x, y, 2039583);
-                    y += 12;
-                    int protein;
-                    int phytonutrients;
-                    int essential_fats;
-                    int insulin_response;
-                    protein = ClientPlayerAPI.getProtein(player);
-                    phytonutrients = ClientPlayerAPI.getProtein(player);
-                    essential_fats = ClientPlayerAPI.getEssentialFats(player);
-                    insulin_response = player.getInsulinResistance();
-                    this.fontRenderer.drawString(("Protein: " + protein + " (" + 100 * protein / 160000 + "%)"), x, y, 2039583);
-                    y += 12;
-                    this.fontRenderer.drawString(("Essential Fats: " + essential_fats + " (" + 100 * essential_fats / 160000 + "%)"), x, y, 2039583);
-                    y += 12;
-                    this.fontRenderer.drawString(("Phytonutrients: " + phytonutrients + " (" + 100 * phytonutrients / 160000 + "%)"), x, y, 2039583);
-                    y += 12;
-                    this.fontRenderer.drawString("Insulin Response: " + insulin_response, x, y, 2039583);
-                    y += 12;
-                    this.fontRenderer.drawString("(Mild: " + 100 * insulin_response / 48000 + "%, Moderate: " + 100 * insulin_response / 96000 + "%, Severe: " + 100 * insulin_response / 144000 + "%, Max: " + 100 * insulin_response / 192000 + "%)", x, y, 2039583);
-                    y += 12;
+                    this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.level", player.getExperienceLevel()), x, y, 2039583);
+                    this.lineBreak();
+                    this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.level.modifier", level_modifier_harvesting, level_modifier_crafting, level_modifier_melee), x, y, 2039583);
+                    this.lineBreak();
+                    this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.exp", player.experience), x, y, 2039583);
+                    this.lineBreak();
+                    this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.health", StringHelper.formatFloat(player.getHealth(), 1, 1), player.getMaxHealth()), x, y, 2039583);
+                    this.lineBreak();
+                    this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.satiation", player.getSatiation(), player.getSatiationLimit()), x, y, 2039583);
+                    this.lineBreak();
+                    this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.nutrition", player.getNutrition(), player.getNutritionLimit()), x, y, 2039583);
+                    this.lineBreak();
+                    int protein = ClientPlayerAPI.getProtein(player);
+                    int phytonutrients = ClientPlayerAPI.getProtein(player);
+                    int essential_fats = ClientPlayerAPI.getEssentialFats(player);
+                    int proteinPer = 100 * ClientPlayerAPI.getProtein(player) / 160000;
+                    int phytonutrientsPer = 100 * ClientPlayerAPI.getProtein(player) / 160000;
+                    int essential_fatsPer = 100 * ClientPlayerAPI.getEssentialFats(player) / 160000;
+                    int insulin_response = player.getInsulinResistance();
+                    this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.protein", protein, proteinPer), x, y, 2039583);
+                    this.lineBreak();
+                    this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.essential_fats", essential_fats, essential_fatsPer), x, y, 2039583);
+                    this.lineBreak();
+                    this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.phytonutrients", phytonutrients, phytonutrientsPer), x, y, 2039583);
+                    this.lineBreak();
+                    this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.insulin_response", insulin_response), x, y, 2039583);
+                    this.lineBreak();
+                    this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.insulin_response.detail", 100 * insulin_response / 48000, 100 * insulin_response / 96000, 100 * insulin_response / 144000, 100 * insulin_response / 192000), x, y, 2039583);
+                    this.lineBreak();
                 }
                 if (entityLivingBase == player)
                     this.fontRenderer.drawString((getMeleeDamageString(player)), x, y, 2039583);
                 else
                     this.fontRenderer.drawString((getMeleeDamageString(entityLivingBase)), x, y, 2039583);
             } else if (page == 2) {
-                this.fontRenderer.drawString(("Protection"), x, y, 2039583);
-                y += 12;
-                this.fontRenderer.drawString((" vs Generic: " + customFloatFormat(entityLivingBase.getTotalProtection(DamageSource.causeMobDamage((EntityLivingBase) null)))), x, y, 2039583);
-                y += 12;
-                this.fontRenderer.drawString((" vs Falls: " + customFloatFormat(entityLivingBase.getTotalProtection(DamageSource.fall))), x, y, 2039583);
-                y += 12;
-                this.fontRenderer.drawString((" vs Fire: " + customFloatFormat(entityLivingBase.getTotalProtection(DamageSource.onFire))), x, y, 2039583);
-                y += 12;
+                this.fontRenderer.drawString(I18n.getString("extragui.stats.protect"), x, y, 2039583);
+                this.lineBreak();
+                this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.protect.generic", customFloatFormat(entityLivingBase.getTotalProtection(DamageSource.causeMobDamage(null)))), x, y, 2039583);
+                this.lineBreak();
+                this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.protect.falls", customFloatFormat(entityLivingBase.getTotalProtection(DamageSource.fall))), x, y, 2039583);
+                this.lineBreak();
+                this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.protect.fire", customFloatFormat(entityLivingBase.getTotalProtection(DamageSource.onFire))), x, y, 2039583);
+                this.lineBreak();
                 EntityArrow entity_arrow = new EntityArrow(entityLivingBase.worldObj);
                 entity_arrow.item_arrow = Item.arrowFlint;
-                this.fontRenderer.drawString((" vs Projectiles: " + customFloatFormat(entityLivingBase.getTotalProtection(DamageSource.causeArrowDamage(entity_arrow, (Entity) null)))), x, y, 2039583);
-                y += 12;
+                this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.protect.projectiles", customFloatFormat(entityLivingBase.getTotalProtection(DamageSource.causeArrowDamage(entity_arrow, null)))), x, y, 2039583);
+                this.lineBreak();
+                this.lineBreak();
                 appendSectionResistance(entityLivingBase, sb);
             } else if (page == 3) {
                 appendSectionPotionEffects(entityLivingBase, sb);
@@ -131,7 +135,7 @@ public class GuiEntityStats extends GuiScreen {
         float total_melee_damage;
 
         if (entity_living_base.isEntityPlayer()) {
-            total_melee_damage = entity_living_base.getAsPlayer().calcRawMeleeDamageVs((Entity) null, false, false);
+            total_melee_damage = entity_living_base.getAsPlayer().calcRawMeleeDamageVs(null, false, false);
         } else if (entity_living_base.hasEntityAttribute(SharedMonsterAttributes.attackDamage)) {
             total_melee_damage = (float) entity_living_base.getEntityAttributeValue(SharedMonsterAttributes.attackDamage);
         } else {
@@ -139,7 +143,7 @@ public class GuiEntityStats extends GuiScreen {
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("Melee Damage: " + customFloatFormat(total_melee_damage));
+        sb.append(I18n.getStringParams("extragui.stats.melee", customFloatFormat(total_melee_damage)));
 
         if (total_melee_damage > 0.0F) {
             ItemStack held_item_stack = entity_living_base.getHeldItemStack();
@@ -166,7 +170,7 @@ public class GuiEntityStats extends GuiScreen {
 
     private static String getItemStackDescriptorForStatsFile(ItemStack item_stack) {
         if (item_stack == null) {
-            return "(nothing)";
+            return I18n.getString("extragui.stats.none");
         } else {
             StringBuilder sb = new StringBuilder();
             sb.append(item_stack.getNameForReferenceFile());
@@ -185,10 +189,9 @@ public class GuiEntityStats extends GuiScreen {
             if (item_stack.isItemEnchanted()) {
                 Map enchantments = EnchantmentHelper.getEnchantmentsMap(item_stack);
                 Set set = enchantments.entrySet();
-                Iterator i = set.iterator();
 
-                while (i.hasNext()) {
-                    Map.Entry e = (Map.Entry) i.next();
+                for (Object o : set) {
+                    Map.Entry e = (Map.Entry) o;
                     Enchantment enchantment = Enchantment.get(((Integer) e.getKey()).intValue());
                     int level = ((Integer) e.getValue()).intValue();
                     StringHelper.addToStringArray(enchantment.getTranslatedName(level, item_stack), notes);
@@ -210,24 +213,25 @@ public class GuiEntityStats extends GuiScreen {
     }
 
     private void appendSectionResistance(EntityLivingBase entity_living_base, StringBuilder sb) {
-        this.fontRenderer.drawString(("Resistance"), x, y, 2039583);
-        y += 12;
-        this.fontRenderer.drawString((" vs Poison: " + Math.round(entity_living_base.getResistanceToPoison() * 100.0F) + "%"), x, y, 2039583);
-        y += 12;
-        this.fontRenderer.drawString((" vs Paralysis: " + Math.round(entity_living_base.getResistanceToParalysis() * 100.0F) + "%"), x, y, 2039583);
-        y += 12;
-        this.fontRenderer.drawString((" vs Drain: " + Math.round(entity_living_base.getResistanceToDrain() * 100.0F) + "%"), x, y, 2039583);
-        y += 12;
-        this.fontRenderer.drawString((" vs Shadow: " + Math.round(entity_living_base.getResistanceToShadow() * 100.0F) + "%"), x, y, 2039583);
-        y += 12;
+        this.fontRenderer.drawString(I18n.getString("extragui.stats.resistance"), x, y, 2039583);
+        this.lineBreak();
+        this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.resistance.poison", Math.round(entity_living_base.getResistanceToPoison() * 100.0F)), x, y, 2039583);
+        this.lineBreak();
+        this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.resistance.paralysis", Math.round(entity_living_base.getResistanceToParalysis() * 100.0F)), x, y, 2039583);
+        this.lineBreak();
+        this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.resistance.drain",  Math.round(entity_living_base.getResistanceToDrain() * 100.0F)), x, y, 2039583);
+        this.lineBreak();
+        this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.resistance.shadow", Math.round(entity_living_base.getResistanceToShadow() * 100.0F)), x, y, 2039583);
+        this.lineBreak();
+        this.lineBreak();
     }
 
     private void appendSectionPotionEffects(EntityLivingBase entity_living_base, StringBuilder sb) {
-        this.fontRenderer.drawString(("Potion Effects"), x, y, 2039583);
-        y += 12;
+        this.fontRenderer.drawString(I18n.getString("extragui.stats.potion"), x, y, 2039583);
+        this.lineBreak();
         if (!entity_living_base.hasActivePotionEffects()) {
-            this.fontRenderer.drawString((" (none)"), x, y, 2039583);
-            y += 12;
+            this.fontRenderer.drawString(I18n.getString("extragui.stats.none"), x, y, 2039583);
+            this.lineBreak();
         } else {
             Collection potion_effects = entity_living_base.getActivePotionEffects();
             Iterator i = potion_effects.iterator();
@@ -237,7 +241,7 @@ public class GuiEntityStats extends GuiScreen {
                 Potion potion = Potion.get(potion_effect.getPotionID());
                 int level = potion_effect.getAmplifier();
                 this.fontRenderer.drawString((" " + I18n.getString(potion.getName())) + " " + StringHelper.getRomanNumeral(level + 1) + " [" + Potion.getDurationString(potion_effect) + "]", x, y, 2039583);
-                y += 12;
+                this.lineBreak();
                 Map attribute_modifiers = potion.func_111186_k();
                 Iterator iterator = attribute_modifiers.entrySet().iterator();
                 String[] effect_descriptions = new String[16];
@@ -256,36 +260,37 @@ public class GuiEntityStats extends GuiScreen {
 
                 if (effect_descriptions[0] != null) {
                     this.fontRenderer.drawString((" (" + StringHelper.implode(effect_descriptions, ", ", true, false) + ")"), x, y, 2039583);
-                    y += 12;
+                    this.lineBreak();
                 }
 
             }
 
         }
+        this.lineBreak();
     }
 
     private void appendSectionEquipment(EntityLivingBase entity_living_base, StringBuilder sb) {
-        this.fontRenderer.drawString(("Equipment"), x, y, 2039583);
-        y += 12;
+        this.fontRenderer.drawString(I18n.getString("extragui.stats.equipment"), x, y, 2039583);
+        this.lineBreak();
 
         if (entity_living_base.getHeldItemStack() != null) {
-            this.fontRenderer.drawString((" Held: " + getItemStackDescriptorForStatsFile(entity_living_base.getHeldItemStack())), x, y, 2039583);
-            y += 12;
+            this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.equipment.held", getItemStackDescriptorForStatsFile(entity_living_base.getHeldItemStack())), x, y, 2039583);
+            this.lineBreak();
         }
 
         ItemStack[] worn_items = entity_living_base.getWornItems();
 
         if (worn_items != null) {
             for (int i = 0; i < worn_items.length; ++i) {
-                this.fontRenderer.drawString((" Worn[" + i + "]: " + getItemStackDescriptorForStatsFile(worn_items[i])), x, y, 2039583);
-                y += 12;
+                this.fontRenderer.drawString(I18n.getStringParams("extragui.stats.equipment.worn", i, getItemStackDescriptorForStatsFile(worn_items[i])), x, y, 2039583);
+                this.lineBreak();
             }
         }
-
+        this.lineBreak();
     }
 
     private static void appendSectionInventory(EntityLivingBase entity_living_base, StringBuilder sb) {
-        sb.append("Inventory" + newline);
+        sb.append(I18n.getString("extragui.stats.invertory") + newline);
         int i;
 
         if (entity_living_base.isEntityPlayer()) {

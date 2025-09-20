@@ -3,6 +3,7 @@ package moddedmite.xylose.extragui.gui;
 import com.google.common.base.Strings;
 import moddedmite.xylose.extragui.config.ExtraGuiConfig;
 import moddedmite.xylose.extragui.util.DisplayUtil;
+import moddedmite.xylose.extragui.util.FrameTimeTracker;
 import net.minecraft.*;
 import org.lwjgl.opengl.GL11;
 
@@ -25,9 +26,25 @@ public class GuiMiniInfoHandle {
     private float nz;
     private float ox;
     private float oz;
+    private final FrameTimeTracker tracker = new FrameTimeTracker();
+    private long lastUpdate = 0;
+    private double last1PercentLow = 0;
 
     public static GuiMiniInfoHandle getInstance() {
         return INSTANCE;
+    }
+
+    public String getFps() {
+        String onePercentLowFps = "";
+        tracker.startFrame();
+        long now = System.currentTimeMillis();
+        if (now - lastUpdate > 1000) {
+            last1PercentLow = tracker.calculate1PercentLow();
+            lastUpdate = now;
+        }
+        if (ExtraGuiConfig.OnePercentLowFps.getBooleanValue())
+            onePercentLowFps = " / " + String.format("1%% low: %.1f", last1PercentLow);
+        return Minecraft.last_fps + "(" + Minecraft.last_fp10s + ")" + onePercentLowFps;
     }
 
     public String getLightInfo(Minecraft mc) {
