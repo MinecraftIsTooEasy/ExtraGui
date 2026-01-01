@@ -174,10 +174,20 @@ public class GuiMiniInfoHandle {
     }
 
     public String getYawPitchSpeedInfo(Minecraft mc) {
-        return I18n.getStringParams("extraGui.formatter.yaw", String.format("%.1f", Float.valueOf(GuiMiniInfoHandle.getNormalizedYaw(mc.thePlayer.rotationYaw)))) + " / " +
-                I18n.getStringParams("extraGui.formatter.pitch", String.format("%.1f", Float.valueOf(GuiMiniInfoHandle.getNormalizedYaw(mc.thePlayer.rotationPitch))));
-        //TODO
-        // speed need apply
+        EntityPlayer player = mc.thePlayer;
+        double motionX = player.motionX;
+        double motionY = player.motionY;
+        double motionZ = player.motionZ;
+        double totalSpeed = Math.sqrt(motionX * motionX + motionY * motionY + motionZ * motionZ) * 10;
+
+        return I18n.getStringParams("extraGui.formatter.yaw",
+                String.format("%.1f", GuiMiniInfoHandle.getNormalizedYaw(mc.thePlayer.rotationYaw)))
+                + " / " +
+                I18n.getStringParams("extraGui.formatter.pitch",
+        String.format("%.1f", mc.thePlayer.rotationPitch)
+                + " / " +
+                I18n.getStringParams("extraGui.formatter.speed",
+                String.format("%.3f", (float) totalSpeed)));
     }
 
     public String directionTranslator(String direction) {

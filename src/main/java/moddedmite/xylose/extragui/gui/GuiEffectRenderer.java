@@ -33,7 +33,7 @@ public class GuiEffectRenderer extends Gui {
     
     public void renderEffectHud(Minecraft mc) {
         Collection<PotionEffect> potionEffects = mc.thePlayer.getActivePotionEffects();
-//        if (potionEffects.isEmpty()) { return; }
+        if (potionEffects.isEmpty()) { return; }
 //        if (!(mc.thePlayer.isMalnourished())) { return; }
 //        if (!(mc.thePlayer.is_cursed)) { return; }
 //        if (!(mc.thePlayer.isInsulinResistant())) { return; }
@@ -77,15 +77,13 @@ public class GuiEffectRenderer extends Gui {
             iconXMITE -= (FRAME_SIZE + 1);
         }
 
-        List<PotionEffect> potionList = potionEffects.stream()
-                .sorted(COMPARATOR)
-                .collect(Collectors.toList());
+        List<PotionEffect> potionList = potionEffects.stream().sorted(COMPARATOR).toList();
 
+        int goodCount = 0;
+        int badCount = 0;
         for (PotionEffect effect : potionList) {
             Potion potion = Potion.potionTypes[effect.getPotionID()];
             if (!potion.hasStatusIcon()) { return; }
-            int goodCount = 0;
-            int badCount = 0;
 
             // Determine coordinates to place icons.
             int iconX = scaledWidth;
@@ -101,14 +99,14 @@ public class GuiEffectRenderer extends Gui {
             }
 
             // Draw background frame.
-            mc.renderEngine.bindTexture(potionFrame);
+            mc.getTextureManager().bindTexture(potionFrame);
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
             int frameX = effect.getIsAmbient() ? BEACON_FRAME_X : POTION_FRAME_X;
             drawTexturedModalRect(iconX, iconY, frameX, FRAME_Y, FRAME_SIZE, FRAME_SIZE);
 
             // Draw potion icon.
             if (potion.hasStatusIcon()) {
-                mc.renderEngine.bindTexture(inventory);
+                mc.getTextureManager().bindTexture(inventory);
                 GL11.glColor4f(1.0f, 1.0f, 1.0f, getAlpha(effect));
                 int iconIndex = potion.getStatusIconIndex();
                 drawTexturedModalRect(iconX + offset, iconY + offset,

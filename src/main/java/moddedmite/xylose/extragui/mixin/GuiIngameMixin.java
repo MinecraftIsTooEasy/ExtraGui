@@ -19,7 +19,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Random;
 
 import static net.minecraft.Minecraft.inDevMode;
 
@@ -30,7 +29,7 @@ public class GuiIngameMixin extends Gui {
     @Unique GuiDurability guiDurability = new GuiDurability();
     @Unique GuiDebugInfo guiDebugInfo = new GuiDebugInfo();
     @Unique GuiEffectRenderer inventoryEffectRenderer = new GuiEffectRenderer();
-    @Unique BrownianTextRenderer brownianTextRenderer = new BrownianTextRenderer();
+    @Unique PinballTextRenderer pinballTextRenderer = new PinballTextRenderer();
 
     @Inject(method = {"renderGameOverlay(FZII)V"},
             at = {@At(value = "INVOKE",
@@ -44,7 +43,7 @@ public class GuiIngameMixin extends Gui {
             inventoryEffectRenderer.renderEffectHud(mc);
             guiDebugInfo.renderDebugInfoOverlay(mc);
 //            if (Objects.equals(mc.gameSettings.language, "zh_CN") || Objects.equals(mc.gameSettings.language, "zh_TW"))
-//                brownianTextRenderer.renderText(mc);
+//                pinballTextRenderer.renderText(mc);
 //            guiWorldTitle.renderWorldTitle(mc);
         }
     }

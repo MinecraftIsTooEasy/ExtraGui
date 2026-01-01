@@ -3,20 +3,18 @@ package moddedmite.xylose.extragui.gui;
 import net.minecraft.Gui;
 import net.minecraft.Minecraft;
 import net.minecraft.ScaledResolution;
+import org.lwjgl.opengl.GL11;
 
-public class BrownianTextRenderer extends Gui {
-    private String text = "注意：请勿称MITE为贝爷生存等称呼，二者无任何直接关系，可称为“MC不可能这么简单”";
+public class PinballTextRenderer extends Gui {
+    private final String text = "请勿称MITE为贝爷生存等称呼，二者无任何直接关联";
+    private final String text1 = "可称为“MC不可能这么简单”(不可关闭，社区环境所迫)";
     private float textX;
     private float textY;
 
     private float velocityX;
     private float velocityY;
-    private final float baseSpeed = 1.0F;
-    private final float maxSpeed = 3.0F;
-    private final float minSpeed = 0.8F;
-    private final float friction = 0.98F;
+    private final float minSpeed = 0.4F;
 
-    private final float randomFactor = 0.05F;
     private long lastUpdate = 0;
 
     private boolean initialized = false;
@@ -27,13 +25,17 @@ public class BrownianTextRenderer extends Gui {
         int screenHeight = res.getScaledHeight();
 
         if (!initialized) {
-            initializePosition(screenWidth, screenHeight);
+            initializePosition(screenWidth * 2, screenHeight * 2);
             initialized = true;
         }
 
-        updatePhysics(screenWidth, screenHeight);
+        updatePhysics(screenWidth * 2, screenHeight * 2);
 
-        mc.fontRenderer.drawStringWithShadow(text, (int) textX, (int) textY, 0x88FFFFFF);
+        GL11.glPushMatrix();
+        GL11.glScaled(0.5F, 0.5F, 1.0F);
+        mc.fontRenderer.drawStringWithShadow(text, (int) textX, (int) textY, 0x44FFFFFF);
+        mc.fontRenderer.drawStringWithShadow(text1, (int) textX, (int) textY + 10, 0x44FFFFFF);
+        GL11.glPopMatrix();
     }
 
     private void initializePosition(int screenWidth, int screenHeight) {
@@ -41,6 +43,8 @@ public class BrownianTextRenderer extends Gui {
         textY = screenHeight / 2.0F;
 
         float angle = (float) (Math.random() * Math.PI * 2);
+        float baseSpeed = 1.0F;
+        float maxSpeed = 3.0F;
         float speed = baseSpeed + (float) Math.random() * (maxSpeed - minSpeed);
 
         velocityX = (float) (Math.cos(angle) * speed);
@@ -53,11 +57,13 @@ public class BrownianTextRenderer extends Gui {
 
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastUpdate > 50) {
+            float randomFactor = 0.05F;
             velocityX += (float) (Math.random() - 0.5) * randomFactor;
             velocityY += (float) (Math.random() - 0.5) * randomFactor;
             lastUpdate = currentTime;
         }
 
+        float friction = 0.98F;
         velocityX *= friction;
         velocityY *= friction;
 
@@ -75,7 +81,7 @@ public class BrownianTextRenderer extends Gui {
 
         if (textX < 10) {
             textX = 10;
-            velocityX = -velocityX * 0.8F; // 反弹并损失20%能量
+            velocityX = -velocityX * 0.8F;
             bounced = true;
         } else if (textX > screenWidth - textWidth - 10) {
             textX = screenWidth - textWidth - 10;

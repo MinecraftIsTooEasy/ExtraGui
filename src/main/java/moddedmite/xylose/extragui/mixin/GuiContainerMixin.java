@@ -11,10 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GuiContainer.class)
 public class GuiContainerMixin extends GuiScreen {
-    @Shadow
-    private Slot theSlot;
-    @Shadow
-    protected static RenderItem itemRenderer = new RenderItem();
+    @Shadow private Slot theSlot;
+    @Shadow protected static RenderItem itemRenderer = new RenderItem();
 
     @Inject(method = "drawScreen", at = @At(value = "TAIL"))
     private void renderStack(int par1, int par2, float par3, CallbackInfo ci) {

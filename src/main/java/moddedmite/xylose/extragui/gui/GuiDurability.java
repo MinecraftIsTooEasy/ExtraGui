@@ -9,23 +9,20 @@ import java.awt.*;
 import java.text.DecimalFormat;
 
 public class GuiDurability extends Gui {
-    private Minecraft mc = Minecraft.getMinecraft();
-    private static RenderItem renderItem = new RenderItem();
+    private final Minecraft mc = Minecraft.getMinecraft();
+    private static final RenderItem renderItem = new RenderItem();
     private int x;
     private int y;
 
     public void renderDurability() {
         FontRenderer fontRenderer = mc.fontRenderer;
-        TextureManager renderEngine = mc.renderEngine;
+        TextureManager renderEngine = mc.getTextureManager();
         EntityClientPlayerMP player = mc.thePlayer;
         ItemStack tool = player.getHeldItemStack();
         ItemStack helmet = player.getCurrentArmor(3);
         ItemStack plate = player.getCurrentArmor(2);
         ItemStack legs = player.getCurrentArmor(1);
         ItemStack boots = player.getCurrentArmor(0);
-        ScaledResolution scaledResolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
-        int screenWidth = scaledResolution.getScaledWidth();
-        int screenHeight = scaledResolution.getScaledHeight();
         Point pos = new Point(ExtraGuiConfig.DurabilityX.getIntegerValue(), ExtraGuiConfig.DurabilityY.getIntegerValue());
         Dimension size = DisplayUtil.displaySize();
         x = ((int) (size.width / ExtraGuiConfig.DurabilitySize.getDoubleValue()) - 1) * pos.x / 100;

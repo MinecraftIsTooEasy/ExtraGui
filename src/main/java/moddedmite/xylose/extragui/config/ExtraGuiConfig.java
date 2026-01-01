@@ -100,10 +100,10 @@ public class ExtraGuiConfig extends SimpleConfigs {
         hotkeys = List.of(ToggleInfo, Stats, MobStats);
 
         configValues = new ArrayList<>();
-        configValues.addAll(durability);
-        configValues.addAll(info);
+//        configValues.addAll(durability);
+//        configValues.addAll(info);
         configValues.addAll(presentInfo);
-        configValues.addAll(itemRender);
+//        configValues.addAll(itemRender);
 //        configValues.addAll(worldTitle);
 
         tabs.add(new ConfigTab("extraGui.durability", durability));
