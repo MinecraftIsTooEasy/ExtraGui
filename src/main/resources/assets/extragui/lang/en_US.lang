@@ -155,3 +155,5 @@ extragui.stats.equipment=Equipment
 extragui.stats.equipment.held=Held: %s
 extragui.stats.equipment.worn=Worn[%s]: %s
 extragui.stats.invertory=Invertory
+
+extragui.gui.anvil.durability=Durability: %d/%d
