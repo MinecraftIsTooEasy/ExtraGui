@@ -11,6 +11,7 @@ import fi.dy.masa.malilib.util.KeyCodes;
 import moddedmite.xylose.extragui.gui.GuiMiniInfoHandle;
 import moddedmite.xylose.extragui.gui.GuiEntityStats;
 import moddedmite.xylose.extragui.util.BiomeNameI18n;
+import net.minecraft.BiomeGenBase;
 import net.minecraft.Minecraft;
 import org.lwjgl.input.Keyboard;
 
@@ -52,7 +53,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final ConfigInfo YawPitchSpeed = new ConfigInfo("extraGui.yawPitchSpeed", false, false, mc -> GuiMiniInfoHandle.getInstance().getYawPitchSpeedInfo(mc));
     public static final ConfigInfo Weather = new ConfigInfo("extraGui.weather", true, mc -> GuiMiniInfoHandle.getInstance().weatherInfo(mc.theWorld));
     public static final ConfigInfo Light = new ConfigInfo("extraGui.light", false, mc -> GuiMiniInfoHandle.getInstance().getLightInfo(mc));
-    public static final ConfigInfo Biome = new ConfigInfo("extraGui.biome", false, mc -> BiomeNameI18n.getBiomeNameI18n(mc.thePlayer.getBiome()));
+    public static final ConfigInfo Biome = new ConfigInfo("extraGui.biome", false, mc ->GuiMiniInfoHandle.getInstance().getBiomeFullInfo(mc.thePlayer.getBiome()));
     public static final ConfigInfo Dimension = new ConfigInfo("extraGui.dimension", false, mc -> GuiMiniInfoHandle.getInstance().getDimension(mc.theWorld));
     public static final ConfigInfo MoonPhases = new ConfigInfo("extraGui.moonPhases", true, mc -> GuiMiniInfoHandle.getInstance().getMoonPhases(mc.theWorld));
     public static final ConfigBoolean OnePercentLowFps = new ConfigBoolean("extraGui.onePercentLowFps", true);
