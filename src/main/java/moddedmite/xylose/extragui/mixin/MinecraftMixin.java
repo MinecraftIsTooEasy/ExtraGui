@@ -1,10 +1,7 @@
 package moddedmite.xylose.extragui.mixin;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import moddedmite.xylose.extragui.config.ExtraGuiConfig;
 import net.minecraft.GameSettings;
 import net.minecraft.Minecraft;
 import org.lwjgl.input.Keyboard;

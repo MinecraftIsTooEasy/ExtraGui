@@ -27,7 +27,8 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final ConfigInteger DurabilityY = new ConfigInteger("extraGui.DurabilityY", 100, 0, 100);
     public static final ConfigDouble DurabilitySize = new ConfigDouble("extraGui.DurabilitySize", 1.0F, 0.1F, 2.0F);
     public static final ConfigColor DurabilityColor = new ConfigColor("extraGui.DurabilityColor", "#FFFFFFFF");
-
+    public static final ConfigBoolean DurabilityTextRight = new ConfigBoolean("extraGui.DurabilityTextRight", true);
+    
     public static final ConfigBoolean DisableDevInfo = new ConfigBoolean("extraGui.cancelDevInfo", true);
     public static final ConfigBoolean DisableErrorInfo = new ConfigBoolean("extraGui.cancelErrorInfo", true);
     public static final ConfigBoolean ShowInfo = new ConfigBoolean("extraGui.showInfo", true);
@@ -60,7 +61,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
     public static final ConfigBoolean DisplayItemRender = new ConfigBoolean("extraGui.DisplayItemRender", false);
     public static final ConfigInteger ItemRenderX = new ConfigInteger("extraGui.ItemRenderX", 5, 0, 100);
     public static final ConfigInteger ItemRenderY = new ConfigInteger("extraGui.ItemRenderY", 25, 0, 100);
-    public static final ConfigDouble ItemRenderSize = new ConfigDouble("extraGui.ItemRenderSize", 8.0F, 1.0F, 8.0F);
+    public static final ConfigDouble ItemRenderSize = new ConfigDouble("extraGui.ItemRenderSize", 7.0F, 1.0F, 8.0F);
 
 //    public static final ConfigBoolean DisplayWorldTitle = new ConfigBoolean("extraGui.DisplayWorldTitle", true);
 //    public static final ConfigInteger WorldTitleX = new ConfigInteger("extraGui.WorldTitleX", 50, 0, 100);
@@ -92,7 +93,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
     }
 
     static {
-        durability = List.of(DisplayDurability, DurabilityPercentageDisplay, DurabilityLine, DurabilityX, DurabilityY, DurabilitySize, DurabilityColor);
+        durability = List.of(DisplayDurability, DurabilityPercentageDisplay, DurabilityLine, DurabilityX, DurabilityY, DurabilitySize, DurabilityColor, DurabilityTextRight);
         info = List.of(ShowInfo, DisableDevInfo, DisableErrorInfo, RightAlign, background, timeZone, InfoXLevel, InfoYLevel, InfoSize, infoColor);
         presentInfo = List.of(FPS, Mem, RealTime, MCTime, Position, DimensionPosition, ChunkPosition, Direction, YawPitchSpeed, Weather, Light, Biome, Dimension, MoonPhases, OnePercentLowFps, CustomString);
         itemRender = List.of(DisplayItemRender, ItemRenderX, ItemRenderY, ItemRenderSize);

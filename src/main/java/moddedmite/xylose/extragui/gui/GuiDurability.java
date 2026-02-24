@@ -36,32 +36,37 @@ public class GuiDurability extends Gui {
             if (player.hasHeldItem()) {
                 RenderHelper.enableGUIStandardItemLighting();
                 renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, tool, x, y - 18);
+                enableDurabilityLine(tool, y - 18);
                 enable2DRender();
-                this.drawString(fontRenderer, getDurability(tool), x + 20, y - 13, ExtraGuiConfig.DurabilityColor.getColorInteger());
+                this.drawString(fontRenderer, getDurability(tool), x, y - 13, ExtraGuiConfig.DurabilityColor.getColorInteger());
             }
 
             if (helmet != null) {
                 renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, helmet, x, y - 78);
+                enableDurabilityLine(helmet, y - 78);
                 enable2DRender();
-                this.drawString(fontRenderer, getDurabilityArmor(helmet), x + 20, y - 73, ExtraGuiConfig.DurabilityColor.getColorInteger());
+                this.drawString(fontRenderer, getDurabilityArmor(helmet), x, y - 73, ExtraGuiConfig.DurabilityColor.getColorInteger());
             }
 
             if (plate != null) {
                 renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, plate, x, y - 63);
+                enableDurabilityLine(plate, y - 63);
                 enable2DRender();
-                this.drawString(fontRenderer, getDurabilityArmor(plate), x + 20, y - 58, ExtraGuiConfig.DurabilityColor.getColorInteger());
+                this.drawString(fontRenderer, getDurabilityArmor(plate), x, y - 58, ExtraGuiConfig.DurabilityColor.getColorInteger());
             }
 
             if (legs != null) {
                 renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, legs, x, y - 48);
+                enableDurabilityLine(legs, y - 48);
                 enable2DRender();
-                this.drawString(fontRenderer, getDurabilityArmor(legs), x + 20, y - 43, ExtraGuiConfig.DurabilityColor.getColorInteger());
+                this.drawString(fontRenderer, getDurabilityArmor(legs), x, y - 43, ExtraGuiConfig.DurabilityColor.getColorInteger());
             }
 
             if (boots != null) {
                 renderItem.renderItemAndEffectIntoGUI(fontRenderer, renderEngine, boots, x, y - 33);
+                enableDurabilityLine(boots, y - 33);
                 enable2DRender();
-                this.drawString(fontRenderer, getDurabilityArmor(boots), x + 20, y - 28, ExtraGuiConfig.DurabilityColor.getColorInteger());
+                this.drawString(fontRenderer, getDurabilityArmor(boots), x, y - 28, ExtraGuiConfig.DurabilityColor.getColorInteger());
             }
         }
 
@@ -69,14 +74,12 @@ public class GuiDurability extends Gui {
     }
 
     public static void enable2DRender() {
-        GL11.glDisable(GL11.GL_LIGHTING);//可能导致玩家,箱子模型渲染错误
-//        GL11.glDisable(GL11.GL_DEPTH_TEST);//附魔光效渲染错误
+        GL11.glDisable(GL11.GL_LIGHTING);
+//        GL11.glDisable(GL11.GL_DEPTH_TEST);
     }
     public void enableDurabilityLine(ItemStack itemStack, int y) {
-        FontRenderer fontRenderer = mc.fontRenderer;
-        TextureManager renderEngine = mc.renderEngine;
         if (ExtraGuiConfig.DurabilityLine.getBooleanValue())
-            renderItem.renderItemOverlayIntoGUI(fontRenderer, renderEngine, itemStack, x, y);
+            renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.getTextureManager(), itemStack, x, y);
     }
 
     public String getDurability(ItemStack itemStack) {
@@ -104,4 +107,9 @@ public class GuiDurability extends Gui {
             return decimalFormat.format(((float) itemStack.getRemainingDurability() / (float) itemStack.getMaxDamage()) * 100) + "%";
     }
 
+    @Override
+    public void drawString(FontRenderer fontRenderer, String text, int x, int y, int color) {
+        int textX = ExtraGuiConfig.DurabilityTextRight.getBooleanValue() ? x + 20 : x - fontRenderer.getStringWidth(text) ;
+        fontRenderer.drawString(text, textX, y, color);
+    }
 }

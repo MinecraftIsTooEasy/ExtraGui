@@ -19,23 +19,23 @@ public class GuiInventoryRender {
             return;
         }
 
-        GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
+//        GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
         GL11.glPushMatrix();
 
-        try {
+//        try {
             Point pos = new Point(ExtraGuiConfig.ItemRenderX.getIntegerValue(), ExtraGuiConfig.ItemRenderY.getIntegerValue());
             Dimension size = DisplayUtil.displaySize();
             int x = ((int) (size.width / ExtraGuiConfig.ItemRenderSize.getDoubleValue()) - 1) * pos.x / 100;
             int y = ((int) (size.height / ExtraGuiConfig.ItemRenderSize.getDoubleValue()) - 1) * pos.y / 100;
             GL11.glScalef((float) ExtraGuiConfig.ItemRenderSize.getDoubleValue(), (float) ExtraGuiConfig.ItemRenderSize.getDoubleValue(), 1.0F);
-            RenderHelper.disableStandardItemLighting();
-            RenderHelper.enableGUIStandardItemLighting();
+//            RenderHelper.disableStandardItemLighting();
+//            RenderHelper.enableGUIStandardItemLighting();
             renderItem.renderItemAndEffectIntoGUI(mc.fontRenderer, mc.renderEngine, slot.getStack(), x, y);
             renderItem.renderItemOverlayIntoGUI(mc.fontRenderer, mc.renderEngine, slot.getStack(), x, y);
-            RenderHelper.disableStandardItemLighting();
-        } finally {
+//            RenderHelper.disableStandardItemLighting();
+//        } finally {
             GL11.glPopMatrix();
-            GL11.glPopAttrib();
-        }
+//            GL11.glPopAttrib();
+//        }
     }
 }

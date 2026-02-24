@@ -7,6 +7,7 @@ config.name.extraGui.DurabilitySize=Durability Size
 config.name.extraGui.DurabilityX=Durability X
 config.name.extraGui.DurabilityY=Durability Y
 config.name.extraGui.DurabilityColor=Durability Color
+config.name.extraGui.DurabilityTextRight=Text on right
 
 ## effect
 config.name.extraGui.DisplayEffect=Display Effect
