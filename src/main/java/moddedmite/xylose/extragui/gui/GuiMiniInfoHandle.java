@@ -317,7 +317,7 @@ public class GuiMiniInfoHandle {
     }
 
     public String getBiomeFullInfo(BiomeGenBase biome) {
-        return BiomeNameI18n.getBiomeNameI18n(biome)+ BiomeNameI18n.getBiomeTempRainInfo(biome);
+        return BiomeNameI18n.getBiomeNameI18n(biome) + BiomeNameI18n.getBiomeTempRainInfo(biome);
     }
 
 }

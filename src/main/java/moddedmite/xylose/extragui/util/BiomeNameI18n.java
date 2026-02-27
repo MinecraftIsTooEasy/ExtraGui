@@ -1,8 +1,8 @@
 package moddedmite.xylose.extragui.util;
 
+import moddedmite.rustedironcore.api.world.BiomeAPI;
 import net.minecraft.BiomeGenBase;
 import net.minecraft.I18n;
-import moddedmite.rustedironcore.api.world.BiomeAPI;
 
 public class BiomeNameI18n {
 
