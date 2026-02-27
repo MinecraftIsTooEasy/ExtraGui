@@ -10,4 +10,12 @@ public class BiomeNameI18n {
         if (((BiomeAPI) biome).getBiomeUnlocalizedName() == null) return biome.biomeName;
         return I18n.getString(((BiomeAPI) biome).getBiomeUnlocalizedName());
     }
+
+    public static String getBiomeTempRainInfo(BiomeGenBase biome) {
+        return I18n.getStringParams(
+                "extragui.biome.temp_rain",
+                biome.temperature,
+                biome.rainfall
+        );
+    }
 }
