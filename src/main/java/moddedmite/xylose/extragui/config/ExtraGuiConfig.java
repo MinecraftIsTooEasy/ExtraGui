@@ -69,7 +69,7 @@ public class ExtraGuiConfig extends SimpleConfigs {
 //    public static final ConfigString WorldTitleColor = new ConfigString("extraGui.WorldTitleColor", "ffffff");
 //    public static final int WorldTitleColorInt =  Integer.parseInt(WorldTitleColor.getStringValue(), 16);
 
-    public static final ConfigHotkey ToggleInfo = new ConfigHotkey("extraGui.toggleShowInfo", Keyboard.KEY_H);
+    public static final ConfigHotkey ToggleInfo = new ConfigHotkey("extraGui.toggleShowInfo", "", "");
     public static final ConfigHotkey Stats = new ConfigHotkey("extraGui.Stats", Keyboard.KEY_P);
     public static final ConfigHotkey MobStats = new ConfigHotkey("extraGui.MobStats", "LCONTROL,P", "");
 
